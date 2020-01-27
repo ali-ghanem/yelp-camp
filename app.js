@@ -32,6 +32,21 @@ app.get("/campgrounds", (req, res) => {
     res.render("campgrounds", { campgrounds: campgrounds });
 });
 
+// Create New Campground
+app.get("/campgrounds/new", (req, res) => {
+    res.render("new.ejs");
+});
+
+// POST New Campground
+app.post("/campgrounds", (req, res) => {
+    console.log(req.body);
+    let name = req.body.name;
+    let image = req.body.image;
+    let newCampground = { name: name, image: image };
+    campgrounds.push(newCampground);
+    res.redirect("/campgrounds");
+});
+
 // Start the Server
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server is running on ${port}`));
