@@ -22,7 +22,8 @@ mongoose.connect(
 
 let campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 let Campground = mongoose.model("Campground", campgroundSchema);
@@ -31,7 +32,8 @@ let Campground = mongoose.model("Campground", campgroundSchema);
 //     {
 //         name: "Campground 1",
 //         image:
-//             "https://cdn.pixabay.com/photo/2014/11/27/18/36/tent-548022__340.jpg"
+//             "https://cdn.pixabay.com/photo/2014/11/27/18/36/tent-548022__340.jpg",
+//         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae veritatis quod fuga iusto laboriosam dolorem facilis eaque, quam molestiae nostrum!"
 //     }, (err, campground) => {
 //         if(err){
 //             console.log(err)
@@ -67,13 +69,12 @@ app.get("/", (req, res) => {
 // GET All Campgrounds
 app.get("/campgrounds", (req, res) => {
     Campground.find({}, (err, campgrounds) => {
-        if(err){
-            console.log(err)
-        } else{
-            console.log(campgrounds)
+        if (err) {
+            console.log(err);
+        } else {
             res.render("campgrounds", { campgrounds: campgrounds });
         }
-    })
+    });
 });
 
 // Create New Campground
@@ -87,8 +88,24 @@ app.post("/campgrounds", (req, res) => {
     let name = req.body.name;
     let image = req.body.image;
     let newCampground = { name: name, image: image };
-    campgrounds.push(newCampground);
-    res.redirect("/campgrounds");
+    Campground.create(newCampground, (err, campground) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/campgrounds");
+        }
+    });
+});
+
+//GET One Campground
+app.get("/campgrounds/:id", (req, res) => {
+    Campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("Get", { campground: campground });
+        }
+    });
 });
 
 // Start the Server
