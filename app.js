@@ -87,7 +87,8 @@ app.post("/campgrounds", (req, res) => {
     console.log(req.body);
     let name = req.body.name;
     let image = req.body.image;
-    let newCampground = { name: name, image: image };
+    let description = req.body.description;
+    let newCampground = { name, image, description };
     Campground.create(newCampground, (err, campground) => {
         if (err) {
             console.log(err);
