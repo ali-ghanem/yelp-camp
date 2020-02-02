@@ -104,7 +104,7 @@ app.get("/campgrounds/:id", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("Get", { campground: campground });
+            res.render("show", { campground: campground });
         }
     });
 });
