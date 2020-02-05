@@ -1,13 +1,16 @@
+
+const express       = require("express"),
+      app           = express(),
+      mongoose      = require("mongoose"),
+      Campground    = require("./models/campground");
+
 // Express
-const express = require("express");
-const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 // Views extensions
 app.set("view engine", "ejs");
 
 // Mongodb
-const mongoose = require("mongoose");
 mongoose.connect(
     "mongodb://localhost:27017/yelp_camp",
     { useNewUrlParser: true, useUnifiedTopology: true },
@@ -20,13 +23,7 @@ mongoose.connect(
     }
 );
 
-let campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
 
-let Campground = mongoose.model("Campground", campgroundSchema);
 
 // Campground.insertMany(
 //     {
