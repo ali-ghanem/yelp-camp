@@ -1,16 +1,10 @@
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const Campground = require("./models/campground");
+const seedDB = require("./seeds");
 
-const express       = require("express"),
-      app           = express(),
-      mongoose      = require("mongoose"),
-      Campground    = require("./models/campground");
-
-// Express
-app.use(express.urlencoded({ extended: true }));
-
-// Views extensions
-app.set("view engine", "ejs");
-
-// Mongodb
+// Mongodb: connect to the database
 mongoose.connect(
     "mongodb://localhost:27017/yelp_camp",
     { useNewUrlParser: true, useUnifiedTopology: true },
@@ -23,40 +17,14 @@ mongoose.connect(
     }
 );
 
+// seeding the database
+seedDB();
 
+// Express: use built-in middleware to parse the requests
+app.use(express.urlencoded({ extended: true }));
 
-// Campground.insertMany(
-//     {
-//         name: "Campground 1",
-//         image:
-//             "https://cdn.pixabay.com/photo/2014/11/27/18/36/tent-548022__340.jpg",
-//         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae veritatis quod fuga iusto laboriosam dolorem facilis eaque, quam molestiae nostrum!"
-//     }, (err, campground) => {
-//         if(err){
-//             console.log(err)
-//         } else{
-//             console.log("NEWLY CREATED CAMPGROUND")
-//             console.log(campground)
-//         }
-//     })
-
-// let campgrounds = [
-//     {
-//         name: "Campground 1",
-//         image:
-//             "https://cdn.pixabay.com/photo/2014/11/27/18/36/tent-548022__340.jpg"
-//     },
-//     {
-//         name: "Campground 2",
-//         image:
-//             "https://cdn.pixabay.com/photo/2020/01/11/07/39/north-4756774__340.jpg"
-//     },
-//     {
-//         name: "Campground 3",
-//         image:
-//             "https://cdn.pixabay.com/photo/2016/02/18/22/16/tent-1208201__340.jpg"
-//     }
-// ];
+// Views extensions
+app.set("view engine", "ejs");
 
 // Landing Page
 app.get("/", (req, res) => {
