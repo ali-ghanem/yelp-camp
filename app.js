@@ -21,8 +21,11 @@ mongoose.connect(
 // seeding the database
 seedDB();
 
-// Express: use built-in middleware to parse the requests
+// use built-in middleware to parse the requests 
 app.use(express.urlencoded({ extended: true }));
+
+// set static files directory
+app.use(express.static(__dirname + "/public"));
 
 // Views extensions
 app.set("view engine", "ejs");
