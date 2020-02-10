@@ -65,11 +65,11 @@ app.post("/campgrounds", (req, res) => {
 
 //GET One Campground
 app.get("/campgrounds/:id", (req, res) => {
-    Campground.findById(req.params.id, (err, campground) => {
+    Campground.findById(req.params.id).populate("comments").exec((err, camp) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("show", { campground: campground });
+            res.render("show", { campground: camp });
         }
     });
 });

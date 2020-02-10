@@ -5,3 +5,8 @@
 <p>
     <%= campground.description %> 
 </p>
+
+<h3>COMMENTS</h3>
+<% campground.comments.forEach(comment => { %>
+    <%= comment.author %> - <%= comment.text %> 
+<% }) %>
