@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Campground = require("./models/campground");
+const Comment = require("./models/comment");
 const seedDB = require("./seeds");
 
 // Mongodb: connect to the database
@@ -49,7 +50,6 @@ app.get("/campgrounds/new", (req, res) => {
 
 // POST New Campground
 app.post("/campgrounds", (req, res) => {
-    console.log(req.body);
     let name = req.body.name;
     let image = req.body.image;
     let description = req.body.description;
@@ -65,13 +65,29 @@ app.post("/campgrounds", (req, res) => {
 
 //GET One Campground
 app.get("/campgrounds/:id", (req, res) => {
-    Campground.findById(req.params.id).populate("comments").exec((err, camp) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("show", { campground: camp });
-        }
-    });
+    Campground.findById(req.params.id)
+        .populate("comments")
+        .exec((err, camp) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("show", { campground: camp });
+            }
+        });
+});
+
+// POST Comment
+app.post("/campgrounds/:id/comments", (req, res) => {
+    try {
+        Campground.findById(req.params.id, async (err, camp) => {
+            let comment = await Comment.create(req.body.comment);
+            camp.comments.push(comment);
+            camp.save();
+            res.redirect("/campgrounds/" + camp._id + "#comment");
+        });
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 // Start the Server

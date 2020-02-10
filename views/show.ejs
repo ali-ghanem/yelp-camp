@@ -1,12 +1,57 @@
-<h1>
-    <%= campground.name %> 
-</h1>
+<%- include("partials/header") %>
 
-<p>
-    <%= campground.description %> 
-</p>
+<div class="container">
+    <h1 class="mb-3">
+        <%= campground.name %>
+    </h1>
+    
+    <div class="row">
+        <div class="col-md-3 order-md-2 mb-4">
+            <div class="list-group">
+                <li class="list-group-item">                    
+                    <span class="d-block">Price</span>
+                    <span class="font-weight-bold">$10.00/night</span>
+                </li>
+                <li class="list-group-item">                    
+                    <span class="d-block">Creator</span>
+                    <span class="font-weight-bold">USER</span>
+                </li>
+                <li class="list-group-item">                    
+                    <span class="d-block">Phone</span>
+                    <span class="font-weight-bold">+9999999999</span>
+                </li>
+                <li class="list-group-item">                    
+                    <span class="d-block">Email</span>
+                    <span class="font-weight-bold">USER@mail.com</span>
+                </li>
+            </div>
+        </div>
 
-<h3>COMMENTS</h3>
-<% campground.comments.forEach(comment => { %>
-    <%= comment.author %> - <%= comment.text %> 
-<% }) %>
+        <div class="col-md-9 order-md-1">
+            <div class="card pb-3">
+                <img class="card-img" src="<%= campground.image %>" alt="camground image">
+                <p class="card-text p-2 mt-2">
+                    <%= campground.description %>
+                </p>
+            </div>
+
+            <div class="card card-body bg-light my-4">
+                <% campground.comments.forEach(comment => { %>
+                <p class="border-bottom pb-1">
+                    <span class="d-block font-weight-bold"><%= comment.author %></span>
+                    <span><%= comment.text %></span>
+                </p>
+                <% }) %>
+
+                <form id="comment" class="form-inline" action="/campgrounds/<%= campground._id %>/comments" method="post">
+                    <input class="form-control mr-2" type="text" name="comment[author]" placeholder="author">
+                    <input class="form-control mr-2" type="text" name="comment[text]" placeholder="comment...">
+                    <input class="btn btn-success" type="submit" value="Add Comment">
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include("partials/footer") %>
