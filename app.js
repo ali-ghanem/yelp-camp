@@ -24,7 +24,7 @@ mongoose.connect(
 // seeding the database
 seedDB();
 
-// use built-in middleware to parse the requests 
+// use built-in middleware to parse the requests
 app.use(express.urlencoded({ extended: true }));
 
 // set static files directory
@@ -32,6 +32,20 @@ app.use(express.static(__dirname + "/public"));
 
 // Views extensions
 app.set("view engine", "ejs");
+
+// Passport Configuration
+app.use(
+    require("express-session")({
+        secret: "secret for yelp-camp",
+        resave: false,
+        saveUninitialized: false
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Landing Page
 app.get("/", (req, res) => {
