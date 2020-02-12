@@ -70,7 +70,7 @@ app.get("/campgrounds", (req, res) => {
 });
 
 // Create New Campground
-app.get("/campgrounds/new", (req, res) => {
+app.get("/campgrounds/new", isLoggedIn, (req, res) => {
     res.render("new.ejs");
 });
 
