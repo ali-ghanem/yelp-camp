@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const Campground = require("./models/campground");
 const Comment = require("./models/comment");
+const User = require("./models/user");
 const seedDB = require("./seeds");
 
 // Mongodb: connect to the database
