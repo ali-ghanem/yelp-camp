@@ -120,9 +120,9 @@ app.get("/register", (req, res) => {
 });
 // sign up logic
 app.post("/register", (req, res) => {
-    let newUser = new User({username: req.body.username});
+    let newUser = new User({ username: req.body.username });
     User.register(newUser, req.body.password, (err, user) => {
-        if(err){
+        if (err) {
             console.log(err);
             return res.redirect("/register");
         }
@@ -131,6 +131,19 @@ app.post("/register", (req, res) => {
         });
     });
 });
+// show login form
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+// login logic
+app.post(
+    "/login",
+    passport.authenticate("local", {
+        successRedirect: "/campgrounds",
+        failureRedirect: "/login"
+    }),
+    (req, res) => {}
+);
 
 // Start the Server
 const port = process.env.PORT || 3000;
