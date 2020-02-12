@@ -144,6 +144,11 @@ app.post(
     }),
     (req, res) => {}
 );
+// logout
+app.get("/logout", (req, res) => {
+    req.logOut();
+    res.redirect("/campgrounds");
+});
 
 // Start the Server
 const port = process.env.PORT || 3000;
