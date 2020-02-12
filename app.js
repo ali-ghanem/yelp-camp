@@ -69,7 +69,7 @@ app.get("/campgrounds/new", (req, res) => {
 });
 
 // POST New Campground
-app.post("/campgrounds", (req, res) => {
+app.post("/campgrounds", isLoggedIn, (req, res) => {
     let name = req.body.name;
     let image = req.body.image;
     let description = req.body.description;
@@ -97,7 +97,7 @@ app.get("/campgrounds/:id", (req, res) => {
 });
 
 // POST Comment
-app.post("/campgrounds/:id/comments", (req, res) => {
+app.post("/campgrounds/:id/comments", isLoggedIn, (req, res) => {
     try {
         Campground.findById(req.params.id, async (err, camp) => {
             let comment = await Comment.create(req.body.comment);
@@ -149,6 +149,13 @@ app.get("/logout", (req, res) => {
     req.logOut();
     res.redirect("/campgrounds");
 });
+// loggedIn middleware
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 // Start the Server
 const port = process.env.PORT || 3000;
