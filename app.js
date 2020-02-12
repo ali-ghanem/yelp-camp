@@ -47,6 +47,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// add middleware for storing logged in user info
+app.use((req, res, next) => {
+    res.locals.loggedInUser = req.user;
+    next();
+});
+
 // Landing Page
 app.get("/", (req, res) => {
     res.render("landing");
@@ -150,8 +156,8 @@ app.get("/logout", (req, res) => {
     res.redirect("/campgrounds");
 });
 // loggedIn middleware
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     }
     res.redirect("/login");
