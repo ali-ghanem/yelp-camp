@@ -38,7 +38,7 @@ router.post("/", isLoggedIn, (req, res) => {
     });
 });
 
-//GET One Campground
+// GET One Campground
 router.get("/:id", (req, res) => {
     Campground.findById(req.params.id)
         .populate("comments")
@@ -49,6 +49,18 @@ router.get("/:id", (req, res) => {
                 res.render("show", { campground: camp });
             }
         });
+});
+
+// Show Edit Campground Page
+router.get("/:id/edit", (req, res) => {
+    Campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err);
+            res.redirect("/campgrounds");
+        } else {
+            res.render("edit", { campground });
+        }
+    });
 });
 
 // POST Comment
