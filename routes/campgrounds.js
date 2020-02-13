@@ -79,6 +79,19 @@ router.put("/:id", (req, res) => {
     );
 });
 
+// Delete Campground
+router.delete("/:id", (req, res) => {
+    Campground.findOne({ _id: req.params.id }, (err, campground) => {
+        if (err) {
+            console.log(err);
+            res.redirect("/campgrounds");
+        } else {
+            campground.remove();
+            res.redirect("/campgrounds");
+        }
+    });
+});
+
 // POST Comment
 router.post("/:id/comments", isLoggedIn, (req, res) => {
     try {
