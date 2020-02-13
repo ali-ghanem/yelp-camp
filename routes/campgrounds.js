@@ -110,7 +110,7 @@ router.post("/:id/comments", isLoggedIn, (req, res) => {
 });
 
 // DELETE Comment
-router.delete("/:id/comments/:comment_id", (req, res) => {
+router.delete("/:id/comments/:comment_id", isCommentAuthor, (req, res) => {
     try {
         Comment.findOne({ _id: req.params.comment_id }, (err, comment) => {
             comment.remove();
@@ -130,15 +130,35 @@ function isLoggedIn(req, res, next) {
     res.redirect("/login");
 }
 
-// authorization middleware
+// authorization middleware for campground
 function isOwner(req, res, next) {
     if (req.isAuthenticated()) {
-        Campground.findOne({ _id: req.params.id }, (err, founcCampground) => {
+        Campground.findOne({ _id: req.params.id }, (err, foundCampground) => {
             if (err) {
                 console.log(err);
                 res.redirect("back");
             } else {
-                if (founcCampground.author.id.equals(req.user._id)) {
+                if (foundCampground.author.id.equals(req.user._id)) {
+                    next();
+                } else {
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
+}
+
+// authorization middleware for comment
+function isCommentAuthor(req, res, next) {
+    if (req.isAuthenticated()) {
+        Comment.findOne({ _id: req.params.comment_id }, (err, foundComment) => {
+            if (err) {
+                console.log(err);
+                res.redirect("back");
+            } else {
+                if (foundComment.author.id.equals(req.user._id)) {
                     next();
                 } else {
                     res.redirect("back");
