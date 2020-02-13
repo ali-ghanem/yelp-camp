@@ -63,6 +63,22 @@ router.get("/:id/edit", (req, res) => {
     });
 });
 
+// Edit Campground
+router.put("/:id", (req, res) => {
+    Campground.findOneAndUpdate(
+        req.params.id,
+        req.body.campground,
+        (err, updatedCampground) => {
+            if (err) {
+                console.log(err);
+                res.redirect("/campgrounds");
+            } else {
+                res.redirect("/campgrounds/" + req.params.id);
+            }
+        }
+    );
+});
+
 // POST Comment
 router.post("/:id/comments", isLoggedIn, (req, res) => {
     try {
