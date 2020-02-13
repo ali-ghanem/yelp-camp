@@ -49,9 +49,11 @@
                 <div class="border-bottom pb-1 mb-3">
                     <span class="d-block font-weight-bold"><%= comment.author.username %></span>
                     <span><%= comment.text %></span>
-                    <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
+                    <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>                     
+                        <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
                 <% }) %>
 
