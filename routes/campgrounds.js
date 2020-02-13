@@ -109,6 +109,19 @@ router.post("/:id/comments", isLoggedIn, (req, res) => {
     }
 });
 
+// DELETE Comment
+router.delete("/:id/comments/:comment_id", (req, res) => {
+    try {
+        Comment.findOne({ _id: req.params.comment_id }, (err, comment) => {
+            comment.remove();
+            res.redirect("/campgrounds/" + req.params.id + "#comment");
+        });
+    } catch (error) {
+        console.log(err);
+        res.redirect("back");
+    }
+});
+
 // loggedIn middleware
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

@@ -46,10 +46,13 @@
 
             <div class="card card-body bg-light my-4">
                 <% campground.comments.forEach(comment => { %>
-                <p class="border-bottom pb-1">
+                <div class="border-bottom pb-1 mb-3">
                     <span class="d-block font-weight-bold"><%= comment.author.username %></span>
                     <span><%= comment.text %></span>
-                </p>
+                    <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
                 <% }) %>
 
                 <form id="comment" class="form-inline" action="/campgrounds/<%= campground._id %>/comments"
