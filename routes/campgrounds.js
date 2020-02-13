@@ -52,8 +52,11 @@ router.post("/:id/comments", isLoggedIn, (req, res) => {
     try {
         Campground.findById(req.params.id, async (err, camp) => {
             let comment = await Comment.create(req.body.comment);
+            comment.author.id = req.user._id;
+            comment.author.username = req.user.username;
+            await comment.save();
             camp.comments.push(comment);
-            camp.save();
+            await camp.save();
             res.redirect("/campgrounds/" + camp._id + "#comment");
         });
     } catch (error) {
