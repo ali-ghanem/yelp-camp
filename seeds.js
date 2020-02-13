@@ -28,12 +28,12 @@ const Comment = require("./models/comment");
 async function seedDB() {
     try {
         // remove all existing campgrounds
-        await Campground.deleteMany({});
-        console.log("Campgrounds removed");
+        // await Campground.deleteMany({});
+        // console.log("Campgrounds removed");
 
-        // remove all existing comments
-        await Comment.deleteMany({});
-        console.log("Comments removed");
+        // // remove all existing comments
+        // await Comment.deleteMany({});
+        // console.log("Comments removed");
     } catch (err) {
         console.log(err);
     }
