@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Campground = require("../models/campground");
 const Comment = require("../models/comment");
+const middleware = require("../middleware");
 
 // GET All Campgrounds
 router.get("/", (req, res) => {
@@ -15,12 +16,12 @@ router.get("/", (req, res) => {
 });
 
 // Create New Campground
-router.get("/new", isLoggedIn, (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("campgrounds/new.ejs");
 });
 
 // POST New Campground
-router.post("/", isLoggedIn, (req, res) => {
+router.post("/", middleware.isLoggedIn, (req, res) => {
     let name = req.body.name;
     let image = req.body.image;
     let description = req.body.description;
@@ -52,7 +53,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Show Edit Campground Page
-router.get("/:id/edit", isOwner, (req, res) => {
+router.get("/:id/edit", middleware.isCampgroundAuthor, (req, res) => {
     Campground.findById(req.params.id, (err, campground) => {
         if (err) {
             console.log(err);
@@ -64,10 +65,11 @@ router.get("/:id/edit", isOwner, (req, res) => {
 });
 
 // Edit Campground
-router.put("/:id", isOwner, (req, res) => {
+router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
+    const { name, image, description } = req.body.campground;
     Campground.findOneAndUpdate(
-        req.params.id,
-        req.body.campground,
+        { _id: req.params.id },
+        { $set: { name, image, description } },
         (err, updatedCampground) => {
             if (err) {
                 console.log(err);
@@ -80,7 +82,7 @@ router.put("/:id", isOwner, (req, res) => {
 });
 
 // Delete Campground
-router.delete("/:id", isOwner, (req, res) => {
+router.delete("/:id", middleware.isCampgroundAuthor, (req, res) => {
     Campground.findOne({ _id: req.params.id }, (err, campground) => {
         if (err) {
             console.log(err);
@@ -93,7 +95,7 @@ router.delete("/:id", isOwner, (req, res) => {
 });
 
 // POST Comment
-router.post("/:id/comments", isLoggedIn, (req, res) => {
+router.post("/:id/comments", middleware.isLoggedIn, (req, res) => {
     try {
         Campground.findById(req.params.id, async (err, camp) => {
             let comment = await Comment.create(req.body.comment);
@@ -110,64 +112,20 @@ router.post("/:id/comments", isLoggedIn, (req, res) => {
 });
 
 // DELETE Comment
-router.delete("/:id/comments/:comment_id", isCommentAuthor, (req, res) => {
-    try {
-        Comment.findOne({ _id: req.params.comment_id }, (err, comment) => {
-            comment.remove();
-            res.redirect("/campgrounds/" + req.params.id + "#comment");
-        });
-    } catch (error) {
-        console.log(err);
-        res.redirect("back");
+router.delete(
+    "/:id/comments/:comment_id",
+    middleware.isCommentAuthor,
+    (req, res) => {
+        try {
+            Comment.findOne({ _id: req.params.comment_id }, (err, comment) => {
+                comment.remove();
+                res.redirect("/campgrounds/" + req.params.id + "#comment");
+            });
+        } catch (error) {
+            console.log(err);
+            res.redirect("back");
+        }
     }
-});
-
-// loggedIn middleware
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-}
-
-// authorization middleware for campground
-function isOwner(req, res, next) {
-    if (req.isAuthenticated()) {
-        Campground.findOne({ _id: req.params.id }, (err, foundCampground) => {
-            if (err) {
-                console.log(err);
-                res.redirect("back");
-            } else {
-                if (foundCampground.author.id.equals(req.user._id)) {
-                    next();
-                } else {
-                    res.redirect("back");
-                }
-            }
-        });
-    } else {
-        res.redirect("back");
-    }
-}
-
-// authorization middleware for comment
-function isCommentAuthor(req, res, next) {
-    if (req.isAuthenticated()) {
-        Comment.findOne({ _id: req.params.comment_id }, (err, foundComment) => {
-            if (err) {
-                console.log(err);
-                res.redirect("back");
-            } else {
-                if (foundComment.author.id.equals(req.user._id)) {
-                    next();
-                } else {
-                    res.redirect("back");
-                }
-            }
-        });
-    } else {
-        res.redirect("back");
-    }
-}
+);
 
 module.exports = router;
