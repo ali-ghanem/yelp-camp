@@ -52,7 +52,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // add middleware for storing logged in user info
 app.use((req, res, next) => {
-    res.locals.loggedInUser = req.user;
+    res.locals.currentUser = req.user;
     next();
 });
 
