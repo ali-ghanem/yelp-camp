@@ -9,14 +9,14 @@ router.get("/", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("campgrounds", { campgrounds: campgrounds });
+            res.render("campgrounds/index", { campgrounds: campgrounds });
         }
     });
 });
 
 // Create New Campground
 router.get("/new", isLoggedIn, (req, res) => {
-    res.render("new.ejs");
+    res.render("campgrounds/new.ejs");
 });
 
 // POST New Campground
@@ -46,7 +46,7 @@ router.get("/:id", (req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                res.render("show", { campground: camp });
+                res.render("campgrounds/show", { campground: camp });
             }
         });
 });
@@ -58,7 +58,7 @@ router.get("/:id/edit", isOwner, (req, res) => {
             console.log(err);
             res.redirect("/campgrounds");
         } else {
-            res.render("edit", { campground });
+            res.render("campgrounds/edit", { campground });
         }
     });
 });
