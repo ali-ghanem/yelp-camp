@@ -4,29 +4,32 @@
     <h1 class="mb-3">
         <%= campground.name %>
     </h1>
-    
+
     <div class="row">
         <div class="col-md-3 order-md-2 mb-4">
+            <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
             <div class="mb-2">
                 <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                 <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </div>
+            <% } %>
+            
             <div class="list-group">
-                <li class="list-group-item">                    
+                <li class="list-group-item">
                     <span class="d-block">Price</span>
                     <span class="font-weight-bold">$10.00/night</span>
                 </li>
-                <li class="list-group-item">                    
+                <li class="list-group-item">
                     <span class="d-block">Creator</span>
                     <span class="font-weight-bold"><%= campground.author.username %> </span>
                 </li>
-                <li class="list-group-item">                    
+                <li class="list-group-item">
                     <span class="d-block">Phone</span>
                     <span class="font-weight-bold">+9999999999</span>
                 </li>
-                <li class="list-group-item">                    
+                <li class="list-group-item">
                     <span class="d-block">Email</span>
                     <span class="font-weight-bold">USER@mail.com</span>
                 </li>
@@ -49,8 +52,10 @@
                 </p>
                 <% }) %>
 
-                <form id="comment" class="form-inline" action="/campgrounds/<%= campground._id %>/comments" method="post">
-                    <input class="form-control mr-2" type="text" name="comment[text]" placeholder="Add a new comment...">
+                <form id="comment" class="form-inline" action="/campgrounds/<%= campground._id %>/comments"
+                    method="post">
+                    <input class="form-control mr-2" type="text" name="comment[text]"
+                        placeholder="Add a new comment...">
                     <input class="btn btn-success" type="submit" value="Comment">
                 </form>
             </div>
