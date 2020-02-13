@@ -37,18 +37,8 @@ async function seedDB() {
 
         // add campgrounds
         for (const seed of seeds) {
-            let campground = await Campground.create(seed);
+            await Campground.create(seed);
             console.log(`Campground "${seed.name}" created`);
-
-            // create comment
-            let comment = await Comment.create({
-                text: "lorem ipsum .....",
-                author: "Ali"
-            });
-            // add comment to campground
-            campground.comments.push(comment);
-            campground.save();
-            console.log(`comment "${comment.text}" added to campground "${campground.name}"`);
         }
     } catch (err) {
         console.log(err);
