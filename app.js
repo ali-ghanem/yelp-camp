@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const methodOverride = require("method-override");
 const campgroundRoutes = require("./routes/campgrounds");
 const indexRoutes = require("./routes/index");
 const User = require("./models/user");
@@ -29,6 +30,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // set static files directory
 app.use(express.static(__dirname + "/public"));
+
+app.use(methodOverride("_method"));
 
 // Views extensions
 app.set("view engine", "ejs");
