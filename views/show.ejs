@@ -38,15 +38,14 @@
             <div class="card card-body bg-light my-4">
                 <% campground.comments.forEach(comment => { %>
                 <p class="border-bottom pb-1">
-                    <span class="d-block font-weight-bold"><%= comment.author %></span>
+                    <span class="d-block font-weight-bold"><%= comment.author.username %></span>
                     <span><%= comment.text %></span>
                 </p>
                 <% }) %>
 
                 <form id="comment" class="form-inline" action="/campgrounds/<%= campground._id %>/comments" method="post">
-                    <input class="form-control mr-2" type="text" name="comment[author]" placeholder="author">
-                    <input class="form-control mr-2" type="text" name="comment[text]" placeholder="comment...">
-                    <input class="btn btn-success" type="submit" value="Add Comment">
+                    <input class="form-control mr-2" type="text" name="comment[text]" placeholder="Add a new comment...">
+                    <input class="btn btn-success" type="submit" value="Comment">
                 </form>
             </div>
         </div>
