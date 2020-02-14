@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
 const campgroundRoutes = require("./routes/campgrounds");
 const indexRoutes = require("./routes/index");
 const User = require("./models/user");
@@ -36,6 +37,9 @@ app.use(methodOverride("_method"));
 // Views extensions
 app.set("view engine", "ejs");
 
+// Flash Messages
+app.use(flash());
+
 // Passport Configuration
 app.use(
     require("express-session")({
@@ -53,6 +57,8 @@ passport.deserializeUser(User.deserializeUser());
 // add middleware for storing logged in user info
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
