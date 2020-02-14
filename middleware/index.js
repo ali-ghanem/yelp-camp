@@ -18,16 +18,19 @@ middlewareObj.isCampgroundAuthor = (req, res, next) => {
         Campground.findOne({ _id: req.params.id }, (err, foundCampground) => {
             if (err) {
                 console.log(err);
+                req.flash("error", "Campground not found");
                 res.redirect("back");
             } else {
                 if (foundCampground.author.id.equals(req.user._id)) {
                     next();
                 } else {
+                    req.flash("error", "You do not have permission to do that.");
                     res.redirect("back");
                 }
             }
         });
     } else {
+        req.flash("error", "Please Login First");
         res.redirect("back");
     }
 };
