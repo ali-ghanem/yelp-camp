@@ -76,3 +76,13 @@ body {
 .no-cssanimations .slideshow li {
     opacity: 1;
 }
+
+#btn-camp{
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+#btn-camp:hover, #btn-camp:focus{
+    color: #ddd;
+    border-color: #ddd;
+}
