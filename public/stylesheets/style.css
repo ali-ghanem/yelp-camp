@@ -6,25 +6,21 @@
 
 html,
 body {
-    min-height: 100%;
+    height: 100vh;
     padding: 0;
     margin: 0;
 }
 
 #main-container {
-    display: flex;
-    flex-direction: column;
-    min-height: -webkit-calc(100% - 120px);
-    min-height: -moz-calc(100% - 120px);
+    min-height: -webkit-calc(100% - 144px);
+    min-height: -moz-calc(100% - 144px);
     min-height: calc(100vh - 144px);
 }
-
 .form-container {
     margin: auto;
     width: 340px;
     border-radius: 5px;
 }
-
 @media (min-width: 576px) {
     .form-container {
         width: 450px;
@@ -33,15 +29,16 @@ body {
         padding: 100px 50px;
         border: 1px solid #000;
     }
-    .jumbotron {
-        padding: 2rem 1rem;
-    }
-    .jumbotron h1 {
-        font-size: 32px;
-        font-weight: 400;
-    }
-    .jumbotron a {
-        font-size: 1rem !important;
-        padding: 10px !important;
-    }
+}
+
+.jumbotron {
+    padding: 2rem 1rem;
+}
+.jumbotron h1 {
+    font-size: 32px;
+    font-weight: 400;
+}
+.jumbotron a {
+    font-size: 1rem !important;
+    padding: 10px !important;
 }
