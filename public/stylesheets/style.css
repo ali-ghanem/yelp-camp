@@ -18,16 +18,11 @@ body {
 }
 .form-container {
     margin: auto;
-    width: 340px;
-    border-radius: 5px;
 }
-@media (min-width: 576px) {
+
+@media (min-width: 470px) {
     .form-container {
         width: 450px;
-    }
-    .form-container-login {
-        padding: 100px 50px;
-        border: 1px solid #000;
     }
 }
 
