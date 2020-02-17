@@ -37,11 +37,15 @@
         </div>
 
         <div class="col-md-9 order-md-1">
-            <div class="card pb-3">
-                <img class="card-img" src="<%= campground.image %>" alt="camground image">
-                <p class="card-text p-2 mt-2">
-                    <%= campground.description %>
-                </p>
+            <div class="camp-card">
+                <div class="card pb-3">
+                    <img class="card-img" src="<%= campground.image %>" alt="camground image">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <%= campground.description %>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="card card-body bg-light my-4">

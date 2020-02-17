@@ -43,13 +43,30 @@ body {
     padding: 10px !important;
 }
 
+.camp-card .card-img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.camp-card .card {
+    border: 0;
+}
+
+.camp-card .card-body{
+    border-right: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-left: 1px solid rgba(0,0,0,.125);
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
+
 .btn-delete-comment {
     border: none;
     padding: 0;
     background: none;
-    color: #E53935;
+    color: #e53935;
 }
 
-.btn-delete-comment:hover{
-    color: #FF0000;
+.btn-delete-comment:hover {
+    color: #ff0000;
 }
