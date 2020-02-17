@@ -1,0 +1,27 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    height: 100%;
+}
+
+.form-container {
+    margin: auto;
+    width: 300px;
+}
+
+@media (min-width: 576px) {
+    .form-container {
+        width: 500px;
+    }
+}

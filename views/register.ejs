@@ -1,37 +1,56 @@
-<%- include("partials/header") %>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="form-container">
-    <h2 class="mb-5 text-center">Create Free Account</h2>
-    <form action="/register" method="post">
-        <div class="form-group">
-            <label for="inputUsername">First Name *</label>
-            <input class="form-control" id="inputUsername" type="text" placeholder="First Name">
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YelpCamp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/stylesheets/register.css">
+</head>
 
-        <div class="form-group">
-            <label for="inputUsername">Last Name *</label>
-            <input class="form-control" id="inputUsername" type="text" placeholder="Last Name">
-        </div>
+<body>
+    <div class="main-container">
+        <div class="form-container pt-4 pt-md-5">
+            <h1 class="text-center font-weight-bold mb-4 mb-md-5">
+                <a href="/campgrounds" class="text-decoration-none">YelpCamp</a>
+            </h1>
 
-        <div class="form-group">
-            <label for="inputUsername">Username *</label>
-            <input class="form-control" id="inputUsername" type="text" name="username" placeholder="username">
-        </div>
-        
-        <div class="form-group">
-            <label for="inputUsername">Password *</label>
-            <input class="form-control" id="inputPassword" type="password" name="password" placeholder="password">
-        </div>
-        
-        <div class="form-group">
-            <label for="inputUsername">Profile Photo</label>
-            <input class="form-control" id="inputUsername" type="text" placeholder="Profile Photo">
-        </div>
+            <h2 class="text-center mb-3 mb-md-4">Create Free Account</h2>
+            <form action="/register" method="post">
+                <div class="form-group">
+                    <label for="inputUsername">First Name *</label>
+                    <input class="form-control" id="inputUsername" type="text" placeholder="First Name">
+                </div>
 
-        <div class="form-group">
-            <input class="form-control btn btn-primary" type="submit" value="Sign Up">
-        </div>
-    </form>
-</div>
+                <div class="form-group">
+                    <label for="inputUsername">Last Name *</label>
+                    <input class="form-control" id="inputUsername" type="text" placeholder="Last Name">
+                </div>
 
-<%- include("partials/footer") %>
+                <div class="form-group">
+                    <label for="inputUsername">Username *</label>
+                    <input class="form-control" id="inputUsername" type="text" name="username" placeholder="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputUsername">Password *</label>
+                    <input class="form-control" id="inputPassword" type="password" name="password"
+                        placeholder="password">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputUsername">Profile Photo</label>
+                    <input class="form-control" id="inputUsername" type="text" placeholder="Profile Photo">
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control btn btn-primary" type="submit" value="Sign Up">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
