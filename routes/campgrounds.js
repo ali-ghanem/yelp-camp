@@ -30,10 +30,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         contactEmail,
         description
     } = req.body;
-    const author = {
-        id: req.user._id,
-        username: req.user.username
-    };
+    const author = req.user._id;
     const newCampground = {
         name,
         image,
@@ -55,6 +52,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 // GET One Campground
 router.get("/:id", (req, res) => {
     Campground.findById(req.params.id)
+        .populate("author")
         .populate("comments")
         .exec((err, camp) => {
             if (err) {

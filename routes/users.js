@@ -18,10 +18,15 @@ router.get("/:id", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            Campground.find({}).where("author.id").equals(user._id).exec((err, campgrounds) => {
-
-                res.render("users/show", { user, campgrounds });
-            });
+            Campground.find({})
+                .where("author")
+                .equals(user._id)
+                .exec((err, campgrounds) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.render("users/show", { user, campgrounds });
+                });
         }
     });
 });

@@ -9,11 +9,8 @@ let campgroundSchema = new mongoose.Schema({
     contactPhone: String,
     contactEmail: String,
     author: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        username: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
     comments: [
         {
@@ -30,7 +27,7 @@ campgroundSchema.pre("remove", async function() {
             _id: {
                 $in: this.comments
             }
-        }); 
+        });
     } catch (error) {
         console.log(error);
     }

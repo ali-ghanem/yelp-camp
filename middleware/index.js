@@ -21,7 +21,7 @@ middlewareObj.isCampgroundAuthor = (req, res, next) => {
                 req.flash("error", "Campground not found");
                 res.redirect("back");
             } else {
-                if (foundCampground.author.id.equals(req.user._id)) {
+                if (foundCampground.author.equals(req.user._id)) {
                     next();
                 } else {
                     req.flash("error", "You do not have permission to do that.");
