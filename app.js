@@ -5,8 +5,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
-const campgroundRoutes = require("./routes/campgrounds");
 const indexRoutes = require("./routes/index");
+const campgroundRoutes = require("./routes/campgrounds");
+const usersRoutes = require("./routes/users");
 const User = require("./models/user");
 const seedDB = require("./seeds");
 
@@ -65,6 +66,7 @@ app.use((req, res, next) => {
 // configure routes
 app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
+app.use("/users", usersRoutes);
 
 // Start the Server
 const port = process.env.PORT || 3000;
