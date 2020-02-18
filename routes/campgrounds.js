@@ -22,11 +22,12 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
 
 // POST New Campground
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    const { name, image, price, contactPhone, contactEmail, description } = req.body;
+    let { name, image, price, contactPhone, contactEmail, description } = req.body;
     const author = {
         id: req.user._id,
         username: req.user.username
     };
+    price = Number(price).toFixed(2);
     const newCampground = { name, image, price, contactPhone, contactEmail, description, author };
     Campground.create(newCampground, (err, campground) => {
         if (err) {
