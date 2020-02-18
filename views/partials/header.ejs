@@ -19,18 +19,23 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/campgrounds">Campgrounds</a>
+                </li>
+            </ul>
             <ul class="navbar-nav">
                 <% if (currentUser) { %>
                 <li class="nav-item">
-                    <a class="text-light mr-3 text-decoration-none" href="/logout">Logout</a>
+                    <a class="nav-link text-light" href="/logout">Logout</a>
                 </li>
                 <% } else { %>
                 <li class="nav-item">
-                    <a class="text-light mr-3 text-decoration-none" href="/login">Login</a>
+                    <a class="nav-link text-light" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="text-light mr-3 text-decoration-none" href="/register">Sign Up</a>
+                    <a class="nav-link text-light" href="/register">Sign Up</a>
                 </li>
                 <% } %>
             </ul>
@@ -40,12 +45,12 @@
         <div class="container">
             <% if (error && error.length > 0) { %>
             <div class="alert alert-danger" role="alert">
-                <%= error %> 
+                <%= error %>
             </div>
             <% } %>
             <% if (success && success.length > 0) { %>
             <div class="alert alert-success" role="alert">
-                <%= success %> 
+                <%= success %>
             </div>
             <% } %>
         </div>
