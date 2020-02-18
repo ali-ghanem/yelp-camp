@@ -22,13 +22,27 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
 
 // POST New Campground
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    let { name, image, price, contactPhone, contactEmail, description } = req.body;
+    const {
+        name,
+        image,
+        price,
+        contactPhone,
+        contactEmail,
+        description
+    } = req.body;
     const author = {
         id: req.user._id,
         username: req.user.username
     };
-    price = Number(price).toFixed(2);
-    const newCampground = { name, image, price, contactPhone, contactEmail, description, author };
+    const newCampground = {
+        name,
+        image,
+        price,
+        contactPhone,
+        contactEmail,
+        description,
+        author
+    };
     Campground.create(newCampground, (err, campground) => {
         if (err) {
             console.log(err);
@@ -65,10 +79,26 @@ router.get("/:id/edit", middleware.isCampgroundAuthor, (req, res) => {
 
 // Edit Campground
 router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
-    const { name, image, price, description } = req.body.campground;
+    const {
+        name,
+        image,
+        contactPhone,
+        contactEmail,
+        price,
+        description
+    } = req.body.campground;
     Campground.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { name, image, price, description } },
+        {
+            $set: {
+                name,
+                image,
+                contactPhone,
+                contactEmail,
+                price,
+                description
+            }
+        },
         (err, updatedCampground) => {
             if (err) {
                 console.log(err);

@@ -19,7 +19,7 @@
             <div class="list-group">
                 <li class="list-group-item">
                     <span class="d-block">Price</span>
-                    <span class="font-weight-bold">$<%= campground.price %>/night</span>
+                    <span class="font-weight-bold">$<%= Number(campground.price).toFixed(2) %>/night</span>
                 </li>
                 <li class="list-group-item">
                     <span class="d-block">Creator</span>
