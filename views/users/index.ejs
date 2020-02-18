@@ -1,0 +1,18 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="row">
+
+        <% users.forEach(user => { %>
+        <div class="border-dark p-2">
+            <img src="<%= user.photo %>" alt="user photo">
+            <a href="users/<%= user.id %>">
+                <h4><%= user.firstName + " " + user.lastName %></h4>
+            </a>
+        </div>
+        <% }) %>
+
+    </div>
+</div>
+
+<%- include("../partials/footer") %>
