@@ -14,8 +14,9 @@ router.get("/register", (req, res) => {
 });
 // sign up logic
 router.post("/register", (req, res) => {
-    let newUser = new User({ username: req.body.username });
-    User.register(newUser, req.body.password, (err, user) => {
+    const { firstName, lastName, username, password, photo } = req.body;
+    let newUser = new User({ firstName, lastName, username, photo });
+    User.register(newUser, password, (err, user) => {
         if (err) {
             console.log(err);
             req.flash("error", err.message);
