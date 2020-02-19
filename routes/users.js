@@ -8,7 +8,21 @@ router.get("/", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("users/index", { users });
+            let usersCampgrounds = {};
+            Campground.find({}, (err, campgrounds) => {
+                if(err){
+                    console.log(err);
+                } else {
+                    campgrounds.forEach(camp => {
+                        if(usersCampgrounds[camp.author]) {
+                            usersCampgrounds[camp.author] += 1
+                        } else {
+                            usersCampgrounds[camp.author] = 1
+                        }
+                    })
+                    res.render("users/index", { users, usersCampgrounds });
+                }
+            })
         }
     });
 });
