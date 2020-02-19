@@ -1,3 +1,7 @@
+/*********************************************************** 
+    GLOBAL
+***********************************************************/
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -11,11 +15,16 @@ body {
     margin: 0;
 }
 
+.clear-fix {
+    clear: both;
+}
+
 #main-container {
     min-height: -webkit-calc(100% - 144px);
     min-height: -moz-calc(100% - 144px);
     min-height: calc(100vh - 144px);
 }
+
 .form-container {
     margin: auto;
 }
@@ -25,6 +34,21 @@ body {
         width: 450px;
     }
 }
+
+.btn-delete {
+    border: none;
+    padding: 0;
+    background: none;
+    color: #e53935;
+}
+
+.btn-delete:hover {
+    color: #ff0000;
+}
+
+/*********************************************************** 
+    CAMPGROUNDS/INDEX
+***********************************************************/
 
 .jumbotron {
     padding: 2rem 1rem;
@@ -47,21 +71,68 @@ body {
     border: 0;
 }
 
-.camp-card .card-body{
-    border-right: 1px solid rgba(0,0,0,.125);
-    border-bottom: 1px solid rgba(0,0,0,.125);
-    border-left: 1px solid rgba(0,0,0,.125);
-    border-bottom-left-radius: .25rem;
-    border-bottom-right-radius: .25rem;
+.camp-card .card-body {
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-left: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
 }
 
-.btn-delete-comment {
-    border: none;
-    padding: 0;
-    background: none;
-    color: #e53935;
+/*********************************************************** 
+    USERS/SHOW
+***********************************************************/
+
+@media (min-width: 768px) {
+    .border-bottom-md-0 {
+        border-bottom: 0px !important;
+    }
+    .border-right-md {
+        border-right: 1px solid #dee2e6 !important;
+    }
 }
 
-.btn-delete-comment:hover {
-    color: #ff0000;
+.card-row .card-img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.card-row .card {
+    border: 0;
+}
+
+.card-row .card-body {
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-left: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+@media (min-width: 768px) {
+    .card-row img {
+        max-width: 200px;
+    }
+    .card-row .card {
+        border: none !important;
+    }
+
+    .card-row .card-img {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .card-row .card-body {
+        border-right: 1px solid rgba(0, 0, 0, 0.125);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        border-top: 1px solid rgba(0, 0, 0, 0.125);
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-row img {
+        max-width: 250px;
+    }
 }
