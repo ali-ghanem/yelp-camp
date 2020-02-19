@@ -53,7 +53,12 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 router.get("/:id", (req, res) => {
     Campground.findById(req.params.id)
         .populate("author")
-        .populate("comments")
+        .populate({
+            path: "comments",
+            populate: {
+                path: "author"
+            }
+        })
         .exec((err, camp) => {
             if (err) {
                 console.log(err);
@@ -126,8 +131,7 @@ router.post("/:id/comments", middleware.isLoggedIn, (req, res) => {
     try {
         Campground.findById(req.params.id, async (err, camp) => {
             let comment = await Comment.create(req.body.comment);
-            comment.author.id = req.user._id;
-            comment.author.username = req.user.username;
+            comment.author = req.user._id;
             await comment.save();
             camp.comments.push(comment);
             await camp.save();

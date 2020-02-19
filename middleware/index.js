@@ -43,7 +43,7 @@ middlewareObj.isCommentAuthor = (req, res, next) => {
                 console.log(err);
                 res.redirect("back");
             } else {
-                if (foundComment.author.id.equals(req.user._id)) {
+                if (foundComment.author.equals(req.user._id)) {
                     next();
                 } else {
                     res.redirect("back");
