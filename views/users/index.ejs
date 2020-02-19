@@ -4,11 +4,20 @@
     <div class="row">
 
         <% users.forEach(user => { %>
-        <div class="border-dark p-2">
-            <img src="<%= user.photo %>" alt="user photo">
-            <a href="users/<%= user.id %>">
-                <h4><%= user.firstName + " " + user.lastName %></h4>
-            </a>
+        <div class="card m-2">
+            <img class="card-img-top" src="<%= user.photo %>" alt="user photo">
+            <div class="card-body">
+
+                <a href="users/<%= user.id %>">
+                    <h4><%= user.firstName + " " + user.lastName %></h4>
+                </a>
+                <% if (usersCampgrounds[user._id]) { %>
+                    <span><%= usersCampgrounds[user._id] %> <%= usersCampgrounds[user._id] === 1 ? "campground" : "campgrounds" %> </span>
+                 
+                <% } else { %>
+                    <span>0 campgrounds</span>
+                <% } %>
+            </div>
         </div>
         <% }) %>
 
