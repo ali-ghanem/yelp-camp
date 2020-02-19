@@ -83,6 +83,19 @@ body {
     USERS/SHOW
 ***********************************************************/
 
+@media (min-width: 768px) and (max-width: 992px) {
+    .header-name {
+        font-size: 1.25rem;
+    }
+}
+
+.user-btn-edit {
+    color: #17a2b8;
+}
+.user-btn-edit:hover {
+    color: #138496;
+}
+
 @media (min-width: 768px) {
     .border-bottom-md-0 {
         border-bottom: 0px !important;
