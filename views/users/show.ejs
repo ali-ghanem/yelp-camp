@@ -1,31 +1,56 @@
 <%- include("../partials/header") %>
 
-<div class="container">
+<div class="container mt-n5 mt-md-0">
     <div class="row">
-        <div class="col-4">
-            <img src="<%= user.photo %>" alt="user photo">
-            <h2><%= user.firstName + " " + user.lastName %></h2>
-        </div>
-        <div class="col-8">
-            <% campgrounds.forEach(campground => { %>
-            <div class="col-sm-6 col-md-4 mb-4 d-flex align-items-stretch">
-                <div class="camp-card">
-                    <div class="card h-100">
-                        <img class="card-img-top img-fluid" src="<%= campground.image %>" alt="">
-
-                        <div class="card-body text-center">
-                            <h4 class="card-title"><%= campground.name %></h4>
-                            <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"> More Info</a>
-                        </div>
+        <div class="col-md-3 border-right-md pr-md-3 pr-lg-4 pr-xl-5">
+            <div class="mb-4 mb-md-0">
+                <div class="border-bottom border-bottom-md-0 p-3 p-md-0">
+                    <div class="d-flex flex-column align-items-center ">
+                        <img class="img-fluid rounded-circle mb-3" src="<%= user.photo %>" alt="user photo">
+                        <h3><%= user.firstName + " " + user.lastName %></h3>
                     </div>
                 </div>
             </div>
-            <% }) %>
+        </div>
+
+        <div class="col-md-9 pl-lg-5">
+            <% if (campgrounds.length) { %>
+            <h5 class="mb-3 pb-2">Created Campgrounds</h5>
+            <div class="row justify-content-center">
+                <% campgrounds.forEach(campground => { %>
+                <div class="col-12 mb-4">
+                    <div class="card-row">
+                        <div class="card flex-md-row">
+                            <div>
+                                <img class="card-img img-fluid" src="<%= campground.image %>" alt="">
+                            </div>
+                            <div class="card-body">
+                                <div class="float-left">
+                                    <h5 class="card-title">
+                                        <a href="/campgrounds/<%= campground._id %>"><%= campground.name %></a>
+                                    </h5>
+                                </div>
+                                <% if (currentUser && user._id.equals(currentUser._id)) { %>
+                                <div class="float-right">
+                                    <form
+                                        action="/campgrounds/<%= campground._id %>?_method=DELETE"
+                                        method="post">
+                                        <button class="btn-delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <% } %>
+                                <div class="clear-fix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            <% } %>
         </div>
     </div>
 </div>
-
-
-
 
 <%- include("../partials/footer") %>
