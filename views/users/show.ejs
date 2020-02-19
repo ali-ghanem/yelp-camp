@@ -7,7 +7,15 @@
                 <div class="border-bottom border-bottom-md-0 p-3 p-md-0">
                     <div class="d-flex flex-column align-items-center ">
                         <img class="img-fluid rounded-circle mb-3" src="<%= user.photo %>" alt="user photo">
-                        <h3><%= user.firstName + " " + user.lastName %></h3>
+                        <h4 class="text-center w-100 header-name">
+                            <%= user.firstName + " " + user.lastName %>
+
+                            <% if (currentUser && user._id.equals(currentUser._id)) { %>
+                                <a class="ml-2 ml-sm-2 user-btn-edit" href="/users/<%= user._id %>/edit">
+                                    <i class="fas fa-user-edit fa-sm fa-fw"></i>
+                                </a>
+                            <% } %>
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -32,9 +40,7 @@
                                 </div>
                                 <% if (currentUser && user._id.equals(currentUser._id)) { %>
                                 <div class="float-right">
-                                    <form
-                                        action="/campgrounds/<%= campground._id %>?_method=DELETE"
-                                        method="post">
+                                    <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
                                         <button class="btn-delete">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
