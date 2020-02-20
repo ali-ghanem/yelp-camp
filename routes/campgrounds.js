@@ -22,7 +22,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
 
 // POST New Campground
 router.post("/", middleware.isLoggedIn, (req, res) => {
-    const {
+    let {
         name,
         image,
         price,
@@ -30,6 +30,11 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         contactEmail,
         description
     } = req.body;
+
+    if (!image) {
+        image = "https://clipartart.com/images/a-person-camping-clipart.gif";
+    }
+
     const author = req.user._id;
     const newCampground = {
         name,
@@ -82,7 +87,7 @@ router.get("/:id/edit", middleware.isCampgroundAuthor, (req, res) => {
 
 // Edit Campground
 router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
-    const {
+    let {
         name,
         image,
         contactPhone,
@@ -90,17 +95,20 @@ router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
         price,
         description
     } = req.body.campground;
+
+    if (!image) {
+        image = "https://clipartart.com/images/a-person-camping-clipart.gif";
+    }
+
     Campground.findOneAndUpdate(
         { _id: req.params.id },
         {
-            $set: {
-                name,
-                image,
-                contactPhone,
-                contactEmail,
-                price,
-                description
-            }
+            name,
+            image,
+            contactPhone,
+            contactEmail,
+            price,
+            description
         },
         (err, updatedCampground) => {
             if (err) {
