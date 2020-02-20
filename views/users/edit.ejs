@@ -1,0 +1,38 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <div class="form-container">
+        <form action="/users/<%= user._id %>?_method=PUT" method="post">
+            <div class="form-group">
+                <label for="inputUsername">First Name *</label>
+                <input class="form-control" id="inputUsername" type="text" name="firstName" placeholder="First Name"
+                    value="<%= user.firstName %>">
+            </div>
+
+            <div class="form-group">
+                <label for="inputUsername">Last Name *</label>
+                <input class="form-control" id="inputUsername" type="text" name="lastName" placeholder="Last Name"
+                    value="<%= user.lastName %>">
+            </div>
+
+            <div class="form-group">
+                <label for="inputUsername">Username *</label>
+                <input class="form-control" id="inputUsername" type="text" name="username" placeholder="username"
+                    value="<%= user.username %>">
+            </div>
+
+            <div class="form-group">
+                <label for="inputUsername">Profile Photo</label>
+                <input class="form-control" id="inputUsername" type="text" name="photo" placeholder="Profile Photo"
+                    value="<%= user.photo %>">
+            </div>
+
+            <div class="form-inline">
+                <input class="btn btn-primary mr-2" type="submit" value="Save">
+                <a class="btn btn-secondary" href="/users/<%= user._id %>">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>
