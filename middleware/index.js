@@ -1,5 +1,6 @@
 const Campground = require("../models/campground");
 const Comment = require("../models/comment");
+const User = require("../models/user");
 
 const middlewareObj = {};
 
@@ -10,6 +11,32 @@ middlewareObj.isLoggedIn = (req, res, next) => {
     }
     req.flash("error", "Please Login First");
     res.redirect("/login");
+};
+
+// authorization middleware for user
+middlewareObj.isUser = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        User.findOne({ _id: req.params.id }, (err, foundUser) => {
+            if (err) {
+                console.log(err);
+                req.flash("error", "User not found");
+                res.redirect("back");
+            } else {
+                if (foundUser._id.equals(req.user._id)) {
+                    next();
+                } else {
+                    req.flash(
+                        "error",
+                        "You do not have permission to do that."
+                    );
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        req.flash("error", "Please Login First");
+        res.redirect("back");
+    }
 };
 
 // authorization middleware for campground
@@ -24,7 +51,10 @@ middlewareObj.isCampgroundAuthor = (req, res, next) => {
                 if (foundCampground.author.equals(req.user._id)) {
                     next();
                 } else {
-                    req.flash("error", "You do not have permission to do that.");
+                    req.flash(
+                        "error",
+                        "You do not have permission to do that."
+                    );
                     res.redirect("back");
                 }
             }
