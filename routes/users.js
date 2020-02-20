@@ -66,6 +66,13 @@ router.put("/:id", middleware.isUser, (req, res) => {
         (err, updatedUser) => {
             if (err) {
                 console.log(err);
+                let message = "";
+                if (err.code === 11000) {
+                    message =
+                        "A user with the given username is already registered";
+                }
+                message = message ? message : err.message;
+                req.flash("error", message);
                 res.redirect("back");
             } else {
                 res.redirect("/users/" + req.params.id);
