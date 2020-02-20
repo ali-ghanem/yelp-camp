@@ -62,23 +62,6 @@ body {
     padding: 10px !important;
 }
 
-.camp-card .card-img {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.camp-card .card {
-    border: 0;
-}
-
-.camp-card .card-body {
-    border-right: 1px solid rgba(0, 0, 0, 0.125);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    border-left: 1px solid rgba(0, 0, 0, 0.125);
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-}
-
 /*********************************************************** 
     USERS/SHOW
 ***********************************************************/
@@ -110,38 +93,15 @@ body {
     border-bottom-right-radius: 0;
 }
 
-.card-row .card {
-    border: 0;
-}
-
-.card-row .card-body {
-    border-right: 1px solid rgba(0, 0, 0, 0.125);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    border-left: 1px solid rgba(0, 0, 0, 0.125);
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-}
-
 @media (min-width: 768px) {
     .card-row img {
         max-width: 200px;
-    }
-    .card-row .card {
-        border: none !important;
     }
 
     .card-row .card-img {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-    }
-
-    .card-row .card-body {
-        border-right: 1px solid rgba(0, 0, 0, 0.125);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-        border-top: 1px solid rgba(0, 0, 0, 0.125);
-        border-top-right-radius: 0.25rem;
-        border-bottom-right-radius: 0.25rem;
-    }
+    } 
 }
 
 @media (min-width: 992px) {
