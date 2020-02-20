@@ -74,4 +74,17 @@ router.put("/:id", middleware.isUser, (req, res) => {
     );
 });
 
+// Delete User
+router.delete("/:id", middleware.isUser, (req, res) => {
+    User.findOne({ _id: req.params.id }, (err, user) => {
+        if (err) {
+            console.log(err);
+            res.redirect("/users/" + req.params.id);
+        } else {
+            user.remove();
+            res.redirect("/campgrounds");
+        }
+    });
+});
+
 module.exports = router;
