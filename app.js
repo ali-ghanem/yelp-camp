@@ -14,7 +14,7 @@ const seedDB = require("./seeds");
 // Mongodb: connect to the database
 mongoose.connect(
     "mongodb://localhost:27017/yelp_camp_2",
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true },
     err => {
         if (err) {
             console.log(err);
