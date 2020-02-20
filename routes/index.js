@@ -14,7 +14,13 @@ router.get("/register", (req, res) => {
 });
 // sign up logic
 router.post("/register", (req, res) => {
-    const { firstName, lastName, username, password, photo } = req.body;
+    let { firstName, lastName, username, password, photo } = req.body;
+
+    // set default photo
+    if (!photo) {
+        photo = "/default_photos/profile-photo.jpg";
+    }
+
     let newUser = new User({ firstName, lastName, username, photo });
     User.register(newUser, password, (err, user) => {
         if (err) {
