@@ -10,19 +10,19 @@ router.get("/", (req, res) => {
         } else {
             let usersCampgrounds = {};
             Campground.find({}, (err, campgrounds) => {
-                if(err){
+                if (err) {
                     console.log(err);
                 } else {
                     campgrounds.forEach(camp => {
-                        if(usersCampgrounds[camp.author]) {
-                            usersCampgrounds[camp.author] += 1
+                        if (usersCampgrounds[camp.author]) {
+                            usersCampgrounds[camp.author] += 1;
                         } else {
-                            usersCampgrounds[camp.author] = 1
+                            usersCampgrounds[camp.author] = 1;
                         }
-                    })
+                    });
                     res.render("users/index", { users, usersCampgrounds });
                 }
-            })
+            });
         }
     });
 });
@@ -43,6 +43,33 @@ router.get("/:id", (req, res) => {
                 });
         }
     });
+});
+
+// show Edit page
+router.get("/:id/edit", (req, res) => {
+    User.findOne({ _id: req.params.id }, (err, user) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("users/edit", { user });
+        }
+    });
+});
+
+router.put("/:id", (req, res) => {
+    const { firstName, lastName, username, photo } = req.body;
+    User.findOneAndUpdate(
+        { _id: req.params.id },
+        { firstName, lastName, username, photo },
+        (err, updatedUser) => {
+            if (err) {
+                console.log(err);
+                res.redirect("back");
+            } else {
+                res.redirect("/users/" + req.params.id);
+            }
+        }
+    );
 });
 
 module.exports = router;
