@@ -12,6 +12,19 @@
 
 <body>
     <div class="main-container">
+        <div class="container pt-3">
+            <% if (error && error.length > 0) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+            <% } %>
+            <% if (success && success.length > 0) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+            <% } %>
+        </div>
+        
         <div class="form-container pt-4 pt-md-5">
             <h1 class="text-center font-weight-bold mb-4 mb-md-5">
                 <a href="/campgrounds" class="text-decoration-none">YelpCamp</a>
