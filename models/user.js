@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = mongoose.Schema({
-    username: String,
-    password: String,
-    firstName: String,
-    lastName: String,
-    photo: String
+    username: { type: String, unique: true, required: true },
+    password: { type: String },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    photo: { type: String }
 });
 
 // add authenticaion functions to the user schema
