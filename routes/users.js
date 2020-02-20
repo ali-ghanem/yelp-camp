@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Campground = require("../models/campground");
+const middleware = require("../middleware");
 
 router.get("/", (req, res) => {
     User.find({}, (err, users) => {
@@ -46,7 +47,7 @@ router.get("/:id", (req, res) => {
 });
 
 // show Edit page
-router.get("/:id/edit", (req, res) => {
+router.get("/:id/edit", middleware.isUser, (req, res) => {
     User.findOne({ _id: req.params.id }, (err, user) => {
         if (err) {
             console.log(err);
@@ -56,7 +57,8 @@ router.get("/:id/edit", (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {
+// Edit User
+router.put("/:id", middleware.isUser, (req, res) => {
     const { firstName, lastName, username, photo } = req.body;
     User.findOneAndUpdate(
         { _id: req.params.id },
