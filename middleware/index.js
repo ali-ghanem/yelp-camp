@@ -35,7 +35,7 @@ middlewareObj.isUser = (req, res, next) => {
         });
     } else {
         req.flash("error", "Please Login First");
-        res.redirect("back");
+        res.redirect("/users");
     }
 };
 
