@@ -31,14 +31,16 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
     User.findOne({ _id: req.params.id }, (err, user) => {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect("/users");
         } else {
             Campground.find({})
                 .where("author")
                 .equals(user._id)
                 .exec((err, campgrounds) => {
                     if (err) {
-                        console.log(err);
+                        req.flash("error", err.message);
+                        res.redirect("/users");
                     }
                     res.render("users/show", { user, campgrounds });
                 });
@@ -50,7 +52,8 @@ router.get("/:id", (req, res) => {
 router.get("/:id/edit", middleware.isUser, (req, res) => {
     User.findOne({ _id: req.params.id }, (err, user) => {
         if (err) {
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect("users/" + req.params.id);
         } else {
             res.render("users/edit", { user });
         }
@@ -65,18 +68,18 @@ router.put("/:id", middleware.isUser, (req, res) => {
         { firstName, lastName, username, photo },
         (err, updatedUser) => {
             if (err) {
-                console.log(err);
-                let message = "";
+                // handle error
                 if (err.code === 11000) {
-                    message =
-                        "A user with the given username is already registered";
+                    req.flash(
+                        "error",
+                        "A user with the given username is already registered"
+                    );
+                } else {
+                    req.flash("error", err.message);
                 }
-                message = message ? message : err.message;
-                req.flash("error", message);
-                res.redirect("back");
-            } else {
-                res.redirect("/users/" + req.params.id);
             }
+            // when success show user profile
+            res.redirect("/users/" + req.params.id);
         }
     );
 });
@@ -85,8 +88,8 @@ router.put("/:id", middleware.isUser, (req, res) => {
 router.delete("/:id", middleware.isUser, (req, res) => {
     User.findOne({ _id: req.params.id }, (err, user) => {
         if (err) {
-            console.log(err);
-            res.redirect("/users/" + req.params.id);
+            req.flash("error", err.message);
+            res.redirect("/users");
         } else {
             user.remove();
             res.redirect("/campgrounds");
