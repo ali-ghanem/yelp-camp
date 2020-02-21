@@ -71,22 +71,19 @@
                             </form>
                         </div>
                         <% } %>
-
                         <div class="float-none"> <br> </div>
                     </div>
-
+                    
                     <div><%= comment.text %></div>
                 </div>
                 <% }) %>
 
-                <textarea name="comment[text]" form="comment" cols="30" rows="2"
-                    placeholder="Add a new comment..."></textarea>
-                <div class="float-right">
-                    <form id="comment" class="form-inline justify-content-end"
-                        action="/campgrounds/<%= campground._id %>/comments" method="post">
+                <form id="comment" action="/campgrounds/<%= campground._id %>/comments" method="post">
+                    <input class="form-control" type="text" name="comment[text]" placeholder="Add a new comment...">
+                    <div class="float-right">
                         <input class="btn btn-success mt-2" type="submit" value="Comment">
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
