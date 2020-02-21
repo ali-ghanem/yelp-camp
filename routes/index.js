@@ -18,7 +18,7 @@ router.post("/register", (req, res) => {
 
     // set default photo
     if (!photo) {
-        photo = "/default_photos/profile-photo.jpg";
+        photo = "/default_photos/profile-photo.png";
     }
 
     let newUser = new User({ firstName, lastName, username, photo });
