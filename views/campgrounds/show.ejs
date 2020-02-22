@@ -52,15 +52,15 @@
                 </div>
             </div>
 
-            <div class="card card-body bg-light my-4">
+            <div class="card card-body bg-light my-4 comments-container">
                 <% campground.comments.forEach(comment => { %>
-                <div class="border-bottom pb-1 mb-3 d-flex flex-row">
+                <div class="photo-comment-container border-bottom pb-1 mb-3 d-flex flex-row">
                     <div class="mr-2">
                         <img src="<%= comment.author.photo %>" alt="user photo" width="40" class="rounded-circle">
                     </div>
 
-                    <div class="w-100">
-                        <div>
+                    <div class="comment-container w-100">
+                        <div class="comment-header">
                             <div class="font-weight-bold float-left">
                                 <a href="/users/<%= comment.author._id %>">
                                     <%= comment.author.firstName + " " + comment.author.lastName %>
@@ -68,7 +68,11 @@
                             </div>
                             <% if (currentUser && comment.author.equals(currentUser._id)) { %>
                             <div class="float-right">
-                                <form
+
+                                <button class="btn-edit-comment d-inline-block mr-1"
+                                    data-campground-id="<%= campground._id %>" data-comment-id="<%= comment._id %>"> <i
+                                        class="fas fa-edit"></i> </button>
+                                <form class="d-inline-block"
                                     action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE"
                                     method="post">
                                     <button class="btn-delete">
@@ -80,7 +84,7 @@
                             <div class="float-none"> <br> </div>
                         </div>
 
-                        <div><%= comment.text %></div>
+                        <div class="comment-body"><%= comment.text %></div>
                     </div>
                 </div>
                 <% }) %>
