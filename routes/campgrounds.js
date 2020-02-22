@@ -143,7 +143,7 @@ router.post("/:id/comments", middleware.isLoggedIn, (req, res) => {
             await comment.save();
             camp.comments.push(comment);
             await camp.save();
-            res.redirect("/campgrounds/" + camp._id + "#comment");
+            res.redirect(`/campgrounds/${req.params.id}#${comment._id}`);
         });
     } catch (error) {
         req.flash("error", error);
@@ -161,7 +161,7 @@ router.put(
                 { _id: req.params.comment_id },
                 { text: req.body.comment },
                 (err, comment) => {
-                    res.redirect("/campgrounds/" + req.params.id + "#comment");
+                    res.redirect(`/campgrounds/${req.params.id}#${req.params.comment_id}`);
                 }
             );
         } catch (error) {
