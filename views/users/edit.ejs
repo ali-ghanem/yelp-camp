@@ -37,7 +37,7 @@
             <h5 class="border-bottom pb-2">Delete Account</h5>
             <p>This will delete your account permanently and will delete all your created campgrounds.</p>
             <form action="/users/<%= user._id %>?_method=DELETE" method="post">
-                <input class="btn btn-danger" type="submit" value="DELETE MY ACCOUNT">
+                <input id="deleteUser" class="btn btn-danger" type="submit" value="DELETE MY ACCOUNT">
             </form>
         </div>
     </div>
