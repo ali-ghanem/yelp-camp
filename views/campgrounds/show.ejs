@@ -9,7 +9,7 @@
         <div class="col-md-3 order-md-2 mb-4">
             <% if (currentUser && campground.author._id.equals(currentUser._id)) { %>
             <div class="mb-2">
-                <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                <a class="btn btn-info" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                 <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger">Delete</button>
                 </form>
