@@ -54,7 +54,7 @@
 
             <div class="card card-body bg-light my-4 comments-container">
                 <% campground.comments.forEach(comment => { %>
-                <div class="photo-comment-container border-bottom pb-1 mb-3 d-flex flex-row">
+                <div id="<%= comment._id %>" class="photo-comment-container border-bottom pb-1 mb-3 d-flex flex-row">
                     <div class="mr-2">
                         <img src="<%= comment.author.photo %>" alt="user photo" width="40" class="rounded-circle">
                     </div>
