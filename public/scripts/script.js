@@ -1,4 +1,8 @@
 $(document).ready(() => {
+    $("#deleteUser").on("click", () =>
+        confirm("Are you sure you want to permanently delete your account?")
+    );
+
     $("#deleteCampground").on("click", () =>
         confirm("Are you sure you want to delete this campground?")
     );
