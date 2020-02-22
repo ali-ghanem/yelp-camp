@@ -46,6 +46,17 @@ body {
     color: #ff0000;
 }
 
+.btn-edit-comment {
+    border: none;
+    padding: 0;
+    background: none;
+    color: #17a2b8;
+}
+
+.btn-edit-comment:hover{
+    color: #117a8b;
+}
+
 /*********************************************************** 
     CAMPGROUNDS/INDEX
 ***********************************************************/
