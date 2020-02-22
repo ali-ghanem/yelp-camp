@@ -151,6 +151,26 @@ router.post("/:id/comments", middleware.isLoggedIn, (req, res) => {
     }
 });
 
+// Edit Comment
+router.put(
+    "/:id/comments/:comment_id",
+    middleware.isCommentAuthor,
+    (req, res) => {
+        try {
+            Comment.findOneAndUpdate(
+                { _id: req.params.comment_id },
+                { text: req.body.comment },
+                (err, comment) => {
+                    res.redirect("/campgrounds/" + req.params.id + "#comment");
+                }
+            );
+        } catch (error) {
+            req.flash("error", error);
+            res.redirect("back");
+        }
+    }
+);
+
 // DELETE Comment
 router.delete(
     "/:id/comments/:comment_id",
