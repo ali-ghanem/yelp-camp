@@ -77,9 +77,11 @@ router.put("/:id", middleware.isUser, (req, res) => {
                 } else {
                     req.flash("error", err.message);
                 }
+                res.redirect("back");
+            } else {
+                // when success show user profile
+                res.redirect("/users/" + req.params.id);
             }
-            // when success show user profile
-            res.redirect("/users/" + req.params.id);
         }
     );
 });
