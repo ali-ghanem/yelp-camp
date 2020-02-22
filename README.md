@@ -1,5 +1,6 @@
-# Yelp Camp
-Node.js Web application for sharing campgrounds. Built with [The Web Developer Bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp) course.
+# YelpCamp
+Node.js Web application for sharing campgrounds.<br>
+It is the final project of [The Web Developer Bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp) course.
 
 ## Features
   * Responsive Web Design
@@ -9,13 +10,19 @@ Node.js Web application for sharing campgrounds. Built with [The Web Developer B
   
 ## Used Technologies
 * Front-End
-  * EJS
+  * HTML
+  * CSS
   * Bootstrap
+  * jQuery
+  * [EJS](https://ejs.co/)
+
 * Back-End
   * Express.js
   * MongoDB
-  * Mongoose
-  * Passport
+  * [Mongoose](https://mongoosejs.com/)
+  * [Passport.js](http://www.passportjs.org/)
+  * [connect-flash](https://github.com/jaredhanson/connect-flash)
+  * [method-override](https://www.npmjs.com/package/method-override)
 
 ## License
 #### [MIT](./LICENSE)
