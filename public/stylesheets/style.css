@@ -39,11 +39,11 @@ body {
     border: none;
     padding: 0;
     background: none;
-    color: #e53935;
+    color: #dc3545;
 }
 
 .btn-delete:hover {
-    color: #ff0000;
+    color: #c82333;
 }
 
 .btn-edit-comment {
