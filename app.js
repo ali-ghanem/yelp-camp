@@ -12,9 +12,15 @@ const User = require("./models/user");
 const seedDB = require("./seeds");
 
 // Mongodb: connect to the database
+const URL = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_2";
 mongoose.connect(
-    "mongodb://localhost:27017/yelp_camp_2",
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true },
+    URL,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    },
     err => {
         if (err) {
             console.log(err);
@@ -70,4 +76,4 @@ app.use("/users", usersRoutes);
 
 // Start the Server
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server is running on ${port}`));
+app.listen(port, () => console.log(`Server is started`));
