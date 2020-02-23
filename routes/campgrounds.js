@@ -64,19 +64,21 @@ router.get("/:id", (req, res) => {
                 path: "author"
             }
         })
-        .exec((err, camp) => {
-            if (err) {
-                req.flash("error", err.message);
+        .exec((err, campground) => {
+            if (err || !campground) {
+                req.flash("error", "Campground not found");
+                res.redirect("/campgrounds");
+            } else {
+                res.render("campgrounds/show", { campground });
             }
-            res.render("campgrounds/show", { campground: camp });
         });
 });
 
 // Show Edit Campground Page
 router.get("/:id/edit", middleware.isCampgroundAuthor, (req, res) => {
     Campground.findById(req.params.id, (err, campground) => {
-        if (err) {
-            req.flash("error", err.message);
+        if (err || !campground) {
+            req.flash("error", "Campground not found");
             res.redirect("/campgrounds");
         } else {
             res.render("campgrounds/edit", { campground });
@@ -110,8 +112,8 @@ router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
             description
         },
         (err, updatedCampground) => {
-            if (err) {
-                req.flash("error", err.message);
+            if (err || !updatedCampground) {
+                req.flash("error", "Campground not found");
                 res.redirect("/campgrounds");
             } else {
                 res.redirect("/campgrounds/" + req.params.id);
@@ -137,13 +139,18 @@ router.delete("/:id", middleware.isCampgroundAuthor, (req, res) => {
 // POST Comment
 router.post("/:id/comments", middleware.isLoggedIn, (req, res) => {
     try {
-        Campground.findById(req.params.id, async (err, camp) => {
-            let comment = await Comment.create(req.body.comment);
-            comment.author = req.user._id;
-            await comment.save();
-            camp.comments.push(comment);
-            await camp.save();
-            res.redirect(`/campgrounds/${req.params.id}#${comment._id}`);
+        Campground.findById(req.params.id, async (err, campground) => {
+            if (err || !campground) {
+                req.flash("error", "Campground not found");
+                res.redirect("/campgrounds");
+            } else {
+                let comment = await Comment.create(req.body.comment);
+                comment.author = req.user._id;
+                await comment.save();
+                campground.comments.push(comment);
+                await campground.save();
+                res.redirect(`/campgrounds/${req.params.id}#${comment._id}`);
+            }
         });
     } catch (error) {
         req.flash("error", error);
@@ -161,7 +168,13 @@ router.put(
                 { _id: req.params.comment_id },
                 { text: req.body.comment },
                 (err, comment) => {
-                    res.redirect(`/campgrounds/${req.params.id}#${req.params.comment_id}`);
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.redirect(
+                            `/campgrounds/${req.params.id}#${comment._id}`
+                        );
+                    }
                 }
             );
         } catch (error) {
@@ -178,8 +191,13 @@ router.delete(
     (req, res) => {
         try {
             Comment.findOne({ _id: req.params.comment_id }, (err, comment) => {
-                comment.remove();
-                res.redirect("/campgrounds/" + req.params.id + "#comment");
+                if (err || !comment) {
+                    req.flash("error", "Comment not found");
+                    res.redirect("/campgrounds/" + req.params.id);
+                } else {
+                    comment.remove();
+                    res.redirect("/campgrounds/" + req.params.id + "#comment");
+                }
             });
         } catch (error) {
             req.flash("error", error);
