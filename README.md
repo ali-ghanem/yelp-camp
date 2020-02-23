@@ -1,6 +1,6 @@
 # YelpCamp
-Node.js Web application for sharing campgrounds.<br>
-It is the final project of [The Web Developer Bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp) course. <br>
+Node.js Web application for sharing campgrounds. 
+It is the final project of [The Web Developer Bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp) course with many additions and improvements.<br><br>
 Application Demo: [aligh-yelpcamp.herokuapp.com](https://aligh-yelpcamp.herokuapp.com)
 
 ## Features
