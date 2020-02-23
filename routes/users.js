@@ -30,8 +30,8 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
     User.findOne({ _id: req.params.id }, (err, user) => {
-        if (err) {
-            req.flash("error", err.message);
+        if (err || !user) {
+            req.flash("error", "User not found");
             res.redirect("/users");
         } else {
             Campground.find({})
@@ -51,9 +51,9 @@ router.get("/:id", (req, res) => {
 // show Edit page
 router.get("/:id/edit", middleware.isUser, (req, res) => {
     User.findOne({ _id: req.params.id }, (err, user) => {
-        if (err) {
-            req.flash("error", err.message);
-            res.redirect("users/" + req.params.id);
+        if (err || !user) {
+            req.flash("error", "User not found");
+            res.redirect("/users");
         } else {
             res.render("users/edit", { user });
         }
@@ -89,12 +89,12 @@ router.put("/:id", middleware.isUser, (req, res) => {
 // Delete User
 router.delete("/:id", middleware.isUser, (req, res) => {
     User.findOne({ _id: req.params.id }, (err, user) => {
-        if (err) {
-            req.flash("error", err.message);
+        if (err || !user) {
+            req.flash("error", "User not found");
             res.redirect("/users");
         } else {
             user.remove();
-            res.redirect("/campgrounds");
+            res.redirect("/users");
         }
     });
 });
