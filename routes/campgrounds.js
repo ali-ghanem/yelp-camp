@@ -6,14 +6,30 @@ const middleware = require("../middleware");
 
 // GET All Campgrounds
 router.get("/", (req, res) => {
-    Campground.find({}, (err, campgrounds) => {
-        if (err) {
-            req.flash("error", err.message);
-            res.redirect("/");
-        } else {
-            res.render("campgrounds/index", { campgrounds });
-        }
-    });
+    if (req.query.search) {
+        Campground.find(
+            { $text: { $search: req.query.search } },
+            { score: { $meta: "textScore" } }
+        )
+            .sort({ score: { $meta: "textScore" } })
+            .exec((err, campgrounds) => {
+                if (err || !campgrounds.length) {
+                    req.flash("error", "No results for your search");
+                    res.redirect("/campgrounds");
+                } else {
+                    res.render("campgrounds/index", { campgrounds });
+                }
+            });
+    } else {
+        Campground.find({}, (err, campgrounds) => {
+            if (err) {
+                req.flash("error", err.message);
+                res.redirect("/");
+            } else {
+                res.render("campgrounds/index", { campgrounds });
+            }
+        });
+    }
 });
 
 // Create New Campground
