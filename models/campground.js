@@ -20,6 +20,8 @@ let campgroundSchema = new mongoose.Schema({
     ]
 });
 
+campgroundSchema.index({ name: "text", description: "text" });
+
 // Remove all associated comments when removing a campground
 campgroundSchema.pre("remove", async function() {
     try {
