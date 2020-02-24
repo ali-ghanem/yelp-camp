@@ -68,7 +68,7 @@ middlewareObj.isCampgroundAuthor = (req, res, next) => {
 // authorization middleware for comment
 middlewareObj.isCommentAuthor = (req, res, next) => {
     if (req.isAuthenticated()) {
-        Campground.findOne({ _id: req.params._id }, (err, foundCampground) => {
+        Campground.findOne({ _id: req.params.id }, (err, foundCampground) => {
             if (err || !foundCampground) {
                 req.flash("error", "Campground not found");
                 res.redirect("/campgrounds");
