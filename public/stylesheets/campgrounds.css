@@ -1,0 +1,80 @@
+.wrapper,
+.wrapper > .content {
+    height: 100vh;
+}
+
+#main-container {
+    min-height: calc(100vh - 96px);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transition: 0.5s;
+    width: 0;
+    overflow: hidden;
+    z-index: 3;
+    background-color: #3a3f44;
+    color: #ffffff;
+}
+
+.sidebar a {
+    border-radius: 0.25rem;
+    color: #000000;
+}
+
+.sidebar a:hover {
+    text-decoration: none;
+}
+
+.dismiss {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+}
+
+.open {
+    width: 260px;
+    padding: 10px;
+}
+
+@media (min-width: 992px) {
+    .sidebar {
+        position: absolute;
+        width: 260px;
+        left: 0px;
+        height: 100%;
+    }
+
+    #main-container .content {
+        margin-left: 300px;
+    }
+
+    .dismiss,
+    #sidebarOpen {
+        display: none;
+    }
+}
+
+#content {
+    z-index: 1;
+}
+
+.div-overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.div-overlay.active {
+    display: block;
+    opacity: 1;
+}
