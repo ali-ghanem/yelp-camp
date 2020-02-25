@@ -20,9 +20,9 @@ body {
 }
 
 #main-container {
-    min-height: -webkit-calc(100% - 144px);
-    min-height: -moz-calc(100% - 144px);
-    min-height: calc(100vh - 144px);
+    min-height: -webkit-calc(100% - 168px);
+    min-height: -moz-calc(100% - 168px);
+    min-height: calc(100vh - 168px);
 }
 
 .form-container {
@@ -53,24 +53,8 @@ body {
     color: #17a2b8;
 }
 
-.btn-edit-comment:hover{
+.btn-edit-comment:hover {
     color: #117a8b;
-}
-
-/*********************************************************** 
-    CAMPGROUNDS/INDEX
-***********************************************************/
-
-.jumbotron {
-    padding: 2rem 1rem;
-}
-.jumbotron h1 {
-    font-size: 32px;
-    font-weight: 400;
-}
-.jumbotron a {
-    font-size: 1rem !important;
-    padding: 10px !important;
 }
 
 /*********************************************************** 
@@ -112,7 +96,7 @@ body {
     .card-row .card-img {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-    } 
+    }
 }
 
 @media (min-width: 992px) {
@@ -125,6 +109,6 @@ body {
     USERS/INDEX
 ***********************************************************/
 
-.card-user img{
+.card-user img {
     max-width: 100px;
 }
