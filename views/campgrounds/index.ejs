@@ -1,37 +1,142 @@
-<%- include("../partials/header") %>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="container mt-4">
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-4"><i class="fas fa-campground"></i>Welcome to YelpCamp!</h1>
-            <p class="lead">View campgrounds from all over the world</p>
-            <hr class="my-2">
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="/campgrounds/new" role="button">Add a new campground</a>
-            </p>
-            <div>
-                <form action="/campgrounds" method="GET">
-                    <input type="text" name="search" placeholder="search for...">
-                    <input type="submit" value="search">
-                </form>
-            </div>
-        </div>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>YelpCamp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/campgrounds.css">
+</head>
 
-    <div class="row">
-        <% campgrounds.forEach(campground => { %>
-        <div class="col-sm-6 col-md-4 mb-4 d-flex align-items-stretch">
-            <div class="card h-100">
-                <img class="card-img-top img-fluid" src="<%= campground.image %>" alt="">
-
-                <div class="card-body text-center">
-                    <h4 class="card-title"><%= campground.name %></h4>
-                    <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"> More Info</a>
+<body>
+    <!-- wrapper of content and div-overlay -->
+    <div class="wrapper">
+        <!-- container of nav, main, footer -->
+        <div class="content">
+            <nav id="headerNav" class="navbar navbar-expand-md navbar-dark bg-dark">
+                <div>
+                    <span id="sidebarOpen" class="text-white"><i class="fas fa-align-left mr-2"></i></span>
+                    <a href="/" class="navbar-brand">
+                        YelpCamp
+                    </a>
                 </div>
-            </div>
-        </div>
-        <% }) %>
-    </div>
-</div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/campgrounds">Campgrounds</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/users">Campers</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <% if (currentUser) { %>
+                        <li class="nav-item">
+                            <a class="nav-link text-light"
+                                href="/users/<%= currentUser._id %>"><%= currentUser.firstName %></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/logout">Logout</a>
+                        </li>
+                        <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/register">Sign Up</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </nav>
 
-<%- include("../partials/footer") %>
+            <!-- container of sidebar and campgrounds list -->
+            <main id="main-container" class="position-relative">
+
+                <div class="sidebar pt-5">
+                    <span class="dismiss">
+                        <i class="fas fa-times"></i>
+                    </span>
+                    <div class="container">
+                        <div class="mb-4 border-bottom pb-3 text-center">
+                            <a class="bg-light p-2 d-block w-100" href="/campgrounds/new" role="button">Create
+                                Campground</a>
+                        </div>
+                        <div class="mb-3 border-bottom pb-3">
+                            <div class="mb-1">Search</div>
+                            <form action="/campgrounds" method="GET">
+                                <div class="input-group">
+                                    <input class="form-control my-0 py-1" type="text" name="search"
+                                        placeholder="name or description" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="input-group-text"><i class="fas fa-search text-grey"
+                                                aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content p-4">
+                    <!-- flash messages -->
+                    <div class="container my-4">
+                        <% if (error && error.length > 0) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <%= error %>
+                        </div>
+                        <% } %>
+                        <% if (success && success.length > 0) { %>
+                        <div class="alert alert-success" role="alert">
+                            <%= success %>
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <!-- campgrounds list -->
+                    <div class="container mt-4">
+
+                        <div class="row">
+                            <% campgrounds.forEach(campground => { %>
+                            <div class="col-sm-6 col-md-4 mb-4 d-flex align-items-stretch">
+                                <div class="card h-100">
+                                    <img class="card-img-top img-fluid" src="<%= campground.image %>" alt="">
+
+                                    <div class="card-body text-center">
+                                        <h4 class="card-title"><%= campground.name %></h4>
+                                        <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"> More
+                                            Info</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="bg-dark text-light text-center py-2">
+                <span>YelpCamp 2020</span>
+            </footer>
+        </div>
+
+        <div class="div-overlay"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="/scripts/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
