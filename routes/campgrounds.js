@@ -32,6 +32,38 @@ router.get("/", (req, res) => {
     }
 });
 
+router.get("/filter", (req, res) => {
+    let { country, city, minPrice, maxPrice } = req.query;
+
+    let conditions = {};
+
+    if (country) {
+        conditions.country = country;
+    }
+    if (city) {
+        conditions.city = city;
+    }
+    if (minPrice && maxPrice) {
+        conditions.$and = [
+            { price: { $gte: minPrice } },
+            { price: { $lte: maxPrice } }
+        ];
+    } else if (minPrice && !maxPrice) {
+        conditions.price = { $gte: minPrice };
+    } else if (maxPrice) {
+        conditions.price = { $lte: maxPrice };
+    }
+
+    Campground.find(conditions, (err, campgrounds) => {
+        if (err || !campgrounds.length) {
+            req.flash("error", "No results for your filter");
+            res.redirect("/campgrounds");
+        } else {
+            res.render("campgrounds/index", { campgrounds });
+        }
+    });
+});
+
 // Create New Campground
 router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("campgrounds/new.ejs");
@@ -43,6 +75,8 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         name,
         image,
         price,
+        country,
+        city,
         contactPhone,
         contactEmail,
         description
@@ -57,6 +91,8 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
         name,
         image,
         price,
+        country,
+        city,
         contactPhone,
         contactEmail,
         description,
