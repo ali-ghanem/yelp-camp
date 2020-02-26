@@ -13,17 +13,18 @@ router.get("/", (req, res) => {
         )
             .sort({ score: { $meta: "textScore" } })
             .exec((err, campgrounds) => {
-                if (err || !campgrounds.length) {
-                    req.flash("error", "No results for your search");
+                if (err) {
+                    req.flash("error", "An error occured");
                     res.redirect("/campgrounds");
-                } else {
-                    res.render("campgrounds/index", { campgrounds });
+                } else if (!campgrounds.length) {
+                    res.locals.error = "No results for your search";
                 }
+                res.render("campgrounds/index", { campgrounds });
             });
     } else {
         Campground.find({}, (err, campgrounds) => {
             if (err) {
-                req.flash("error", err.message);
+                req.flash("error", "An error occured");
                 res.redirect("/");
             } else {
                 res.render("campgrounds/index", { campgrounds });
@@ -55,12 +56,13 @@ router.get("/filter", (req, res) => {
     }
 
     Campground.find(conditions, (err, campgrounds) => {
-        if (err || !campgrounds.length) {
-            req.flash("error", "No results for your filter");
+        if (err) {
+            req.flash("error", "An error occured");
             res.redirect("/campgrounds");
-        } else {
-            res.render("campgrounds/index", { campgrounds });
+        } else if (!campgrounds.length) {
+            res.locals.error = "No results for your filter";
         }
+        res.render("campgrounds/index", { campgrounds });
     });
 });
 
@@ -100,7 +102,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     };
     Campground.create(newCampground, (err, campground) => {
         if (err) {
-            req.flash("error", err.message);
+            req.flash("error", "An error occured");
         }
         res.redirect("/campgrounds");
     });
@@ -177,9 +179,8 @@ router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
 // Delete Campground
 router.delete("/:id", middleware.isCampgroundAuthor, (req, res) => {
     Campground.findOne({ _id: req.params.id }, (err, campground) => {
-        if (err) {
-            console.log(err);
-            req.flash("error", err.message);
+        if (err || !campground) {
+            req.flash("error", "An error occured");
             res.redirect("/campgrounds");
         } else {
             campground.remove();
@@ -193,7 +194,7 @@ router.post("/:id/comments", middleware.isLoggedIn, (req, res) => {
     try {
         Campground.findById(req.params.id, async (err, campground) => {
             if (err || !campground) {
-                req.flash("error", "Campground not found");
+                req.flash("error", "An error occured");
                 res.redirect("/campgrounds");
             } else {
                 let comment = await Comment.create(req.body.comment);
@@ -205,7 +206,7 @@ router.post("/:id/comments", middleware.isLoggedIn, (req, res) => {
             }
         });
     } catch (error) {
-        req.flash("error", error);
+        req.flash("error", "An error occured");
         res.redirect("back");
     }
 });
@@ -220,8 +221,9 @@ router.put(
                 { _id: req.params.comment_id },
                 { text: req.body.comment },
                 (err, comment) => {
-                    if (err) {
-                        console.log(err);
+                    if (err || !comment) {
+                        req.flash("error", "An error occured");
+                        res.redirect("/campgrounds/" + req.params.id);                        
                     } else {
                         res.redirect(
                             `/campgrounds/${req.params.id}#${comment._id}`
@@ -230,8 +232,8 @@ router.put(
                 }
             );
         } catch (error) {
-            req.flash("error", error);
-            res.redirect("back");
+            req.flash("error", "An error occured");
+            res.redirect("/campgrounds/" + req.params.id);
         }
     }
 );
@@ -244,7 +246,7 @@ router.delete(
         try {
             Comment.findOne({ _id: req.params.comment_id }, (err, comment) => {
                 if (err || !comment) {
-                    req.flash("error", "Comment not found");
+                    req.flash("error", "An error occured");
                     res.redirect("/campgrounds/" + req.params.id);
                 } else {
                     comment.remove();
@@ -253,7 +255,7 @@ router.delete(
             });
         } catch (error) {
             req.flash("error", error);
-            res.redirect("back");
+            res.redirect("/campgrounds/" + req.params.id);
         }
     }
 );
