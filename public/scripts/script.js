@@ -21,4 +21,13 @@ $(document).ready(() => {
         $(".sidebar").removeClass("open");
         $(".div-overlay").removeClass("active");
     });
+
+    $("#filterForm").submit(function() {
+        $(this)
+            .find("input[name], select[name]")
+            .filter(function() {
+                return !this.value;
+            })
+            .prop("name", "");
+    });
 });
