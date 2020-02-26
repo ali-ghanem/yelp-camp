@@ -18,15 +18,8 @@
     z-index: 3;
     background-color: #3a3f44;
     color: #ffffff;
-}
-
-.sidebar a {
-    border-radius: 0.25rem;
-    color: #000000;
-}
-
-.sidebar a:hover {
-    text-decoration: none;
+    overflow: auto;
+    bottom: 0;
 }
 
 .dismiss {
@@ -44,7 +37,7 @@
     .sidebar {
         position: absolute;
         width: 260px;
-        left: 0px;
+        left: 0;
         height: 100%;
     }
 
