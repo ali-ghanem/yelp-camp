@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="/stylesheets/campgrounds.css">
+
+    <!-- country-region -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="gettext" type="application/x-po" href="/languages/en/LC_MESSAGES/en.po">
 </head>
 
 <body>
@@ -62,17 +66,18 @@
             <!-- container of sidebar and campgrounds list -->
             <main id="main-container" class="position-relative">
 
-                <div class="sidebar pt-5">
+                <div class="sidebar pt-4">
                     <span class="dismiss">
                         <i class="fas fa-times"></i>
                     </span>
                     <div class="container">
-                        <div class="mb-4 border-bottom pb-3 text-center">
-                            <a class="bg-light p-2 d-block w-100" href="/campgrounds/new" role="button">Create
+                        <div class="mb-4 border-bottom pb-3">
+                            <div class="mb-1 font-weight-bold">CREATE</div>
+                            <a class="btn btn-light d-block w-100" href="/campgrounds/new" role="button">Create
                                 Campground</a>
                         </div>
                         <div class="mb-3 border-bottom pb-3">
-                            <div class="mb-1">Search</div>
+                            <div class="mb-1 font-weight-bold">SEARCH</div>
                             <form action="/campgrounds" method="GET">
                                 <div class="input-group">
                                     <input class="form-control my-0 py-1" type="text" name="search"
@@ -137,6 +142,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- country-region -->
+    <script src="/scripts/geodatasource-cr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/scripts/Gettext.js"></script>
 </body>
 
 </html>
