@@ -46,18 +46,18 @@ body {
 }
 
 .slideshow li:nth-child(1) {
-    background-image: url("../background_images/1.jpg");
+    background-image: url("../img/background_images/.jpg");
 }
 .slideshow li:nth-child(2) {
-    background-image: url("../background_images/2.jpg");
+    background-image: url("../img/background_images/2.jpg");
     animation-delay: 10s;
 }
 .slideshow li:nth-child(3) {
-    background-image: url("../background_images/3.jpg");
+    background-image: url("../img/background_images/3.jpg");
     animation-delay: 20s;
 }
 .slideshow li:nth-child(4) {
-    background-image: url("../background_images/4.jpg");
+    background-image: url("../img/background_images/4.jpg");
     animation-delay: 30s;
 }
 

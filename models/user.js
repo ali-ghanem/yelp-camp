@@ -10,6 +10,8 @@ const userSchema = mongoose.Schema({
     photo: { type: String }
 });
 
+userSchema.index({ firstName: "text" , lastName: "text"});
+
 // add authenticaion functions to the user schema
 userSchema.plugin(passportLocalMongoose);
 

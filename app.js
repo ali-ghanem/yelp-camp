@@ -12,7 +12,7 @@ const User = require("./models/user");
 const seedDB = require("./seeds");
 
 // Mongodb: connect to the database
-const URL = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_2";
+const URL = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_3";
 mongoose.connect(
     URL,
     {
