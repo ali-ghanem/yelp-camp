@@ -1,26 +1,117 @@
-<%- include("../partials/header") %>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="container">
-    <div class="row">
-        <% users.forEach(user => { %>
-        <% if (usersCampgrounds[user._id]) { %>
-        <div class="col-lg-6 mb-3">
-            <div class="card-user h-100">
-                <div class="card flex-row h-100 p-2">
-                    <img class="card-img rounded-circle img-fluid" src="<%= user.photo %>" alt="user photo">
-                    <div class="card-body">
-                        <a href="users/<%= user.id %>">
-                            <h5><%= user.firstName + " " + user.lastName %></h5>
-                        </a>
-                        <span><%= usersCampgrounds[user._id] %>
-                            <%= usersCampgrounds[user._id] === 1 ? "campground" : "campgrounds" %> </span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>YelpCamp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/users.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+        <a href="/" class="navbar-brand">YelpCamp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/campgrounds">Campgrounds</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/users">Campers</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <% if (currentUser) { %>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/users/<%= currentUser._id %>"><%= currentUser.firstName %></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/logout">Logout</a>
+                </li>
+                <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/register">Sign Up</a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main-container">
+        <div id="search-bar-container" class="container">
+            <div class="search-bar p-3 mb-3 ">
+
+                <form action="/users" method="get" class="form-inline">
+                    <div class="input-group">
+                        <input class="form-control my-0 py-1" type="text" name="search" placeholder="search user..."
+                            aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="input-group-text"><i class="fas fa-search text-grey"
+                                    aria-hidden="true"></i></button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-        <% } %>
-        <% }) %>
-    </div>
-</div>
 
-<%- include("../partials/footer") %>
+        <div class="container">
+            <% if (error && error.length > 0) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+            <% } %>
+            <% if (success && success.length > 0) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+            <% } %>
+
+            <div class="row">
+                <% users.forEach(user => { %>
+                <% if (usersCampgrounds[user._id]) { %>
+                <div class="col-lg-6 mb-3">
+                    <div class="card-user h-100">
+                        <div class="card flex-row h-100 p-2">
+                            <img class="card-img rounded-circle img-fluid" src="<%= user.photo %>" alt="user photo">
+                            <div class="card-body">
+                                <a href="users/<%= user.id %>">
+                                    <h5><%= user.firstName + " " + user.lastName %></h5>
+                                </a>
+                                <span><%= usersCampgrounds[user._id] %>
+                                    <%= usersCampgrounds[user._id] === 1 ? "campground" : "campgrounds" %> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                <% }) %>
+            </div>
+        </div>
+
+    </main>
+    <footer class="bg-dark text-light text-center py-2">
+        <span>YelpCamp 2020</span>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="/scripts/script.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
