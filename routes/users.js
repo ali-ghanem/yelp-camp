@@ -4,28 +4,55 @@ const User = require("../models/user");
 const Campground = require("../models/campground");
 const middleware = require("../middleware");
 
-router.get("/", (req, res) => {
-    User.find({}, (err, users) => {
+async function getUsersCampgrounds(res) {
+    let usersCampgrounds = {};
+    await Campground.find({}, (err, campgrounds) => {
         if (err) {
-            console.log(err);
+            res.locals.error = "An error occured";
         } else {
-            let usersCampgrounds = {};
-            Campground.find({}, (err, campgrounds) => {
-                if (err) {
-                    console.log(err);
+            campgrounds.forEach(camp => {
+                if (usersCampgrounds[camp.author]) {
+                    usersCampgrounds[camp.author] += 1;
                 } else {
-                    campgrounds.forEach(camp => {
-                        if (usersCampgrounds[camp.author]) {
-                            usersCampgrounds[camp.author] += 1;
-                        } else {
-                            usersCampgrounds[camp.author] = 1;
-                        }
-                    });
-                    res.render("users/index", { users, usersCampgrounds });
+                    usersCampgrounds[camp.author] = 1;
                 }
             });
         }
     });
+    return usersCampgrounds;
+}
+
+router.get("/", async (req, res) => {
+    let users = [];
+
+    if (req.query.search) {
+        User.find(
+            { $text: { $search: req.query.search } },
+            { score: { $meta: "textScore" } }
+        )
+            .sort({ score: { $meta: "textScore" } })
+            .exec(async (err, foundUsers) => {
+                if (err) {
+                    req.flash("error", "An error occured");
+                    res.redirect("/users");
+                } else if (!foundUsers.length) {
+                    res.locals.error = "No results for your search";
+                }
+                users = foundUsers;
+            });
+    } else {
+        User.find({}, async (err, foundUsers) => {
+            if (err) {
+                req.flash("error", "An error occured");
+                res.redirect("/users");
+            } else {
+                users = foundUsers;
+            }
+        });
+    }
+
+    let usersCampgrounds = await getUsersCampgrounds(res);
+    res.render("users/index", { users, usersCampgrounds });
 });
 
 router.get("/:id", (req, res) => {
