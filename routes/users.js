@@ -5,54 +5,52 @@ const Campground = require("../models/campground");
 const middleware = require("../middleware");
 
 async function getUsersCampgrounds(res) {
-    let usersCampgrounds = {};
-    await Campground.find({}, (err, campgrounds) => {
-        if (err) {
-            res.locals.error = "An error occured";
-        } else {
-            campgrounds.forEach(camp => {
-                if (usersCampgrounds[camp.author]) {
-                    usersCampgrounds[camp.author] += 1;
-                } else {
-                    usersCampgrounds[camp.author] = 1;
-                }
-            });
-        }
-    });
-    return usersCampgrounds;
+    try {
+        let usersCampgrounds = {};
+        let campgrounds = await Campground.find({});
+        campgrounds.forEach(camp => {
+            if (usersCampgrounds[camp.author]) {
+                usersCampgrounds[camp.author] += 1;
+            } else {
+                usersCampgrounds[camp.author] = 1;
+            }
+        });
+        return usersCampgrounds;
+    } catch (err) {
+        res.locals.error = "An error occured";
+        return {};
+    }
 }
 
 router.get("/", async (req, res) => {
-    let users = [];
+    try {
+        let users = [];
+        if (req.query.search) {
+            let foundUsers = await User.find(
+                { $text: { $search: req.query.search } },
+                { score: { $meta: "textScore" } }
+            ).sort({ score: { $meta: "textScore" } });
 
-    if (req.query.search) {
-        User.find(
-            { $text: { $search: req.query.search } },
-            { score: { $meta: "textScore" } }
-        )
-            .sort({ score: { $meta: "textScore" } })
-            .exec(async (err, foundUsers) => {
-                if (err) {
-                    req.flash("error", "An error occured");
-                    res.redirect("/users");
-                } else if (!foundUsers.length) {
-                    res.locals.error = "No results for your search";
-                }
-                users = foundUsers;
-            });
-    } else {
-        User.find({}, async (err, foundUsers) => {
-            if (err) {
-                req.flash("error", "An error occured");
-                res.redirect("/users");
-            } else {
-                users = foundUsers;
+            if (!foundUsers.length) {
+                res.locals.error = "No results for your search";
+                return res.render("users/index", {
+                    users: [],
+                    usersCampgrounds: {}
+                });
             }
-        });
-    }
 
-    let usersCampgrounds = await getUsersCampgrounds(res);
-    res.render("users/index", { users, usersCampgrounds });
+            users = foundUsers;
+        } else {
+            users = await User.find({});
+        }
+
+        let usersCampgrounds = await getUsersCampgrounds(res);
+
+        res.render("users/index", { users, usersCampgrounds });
+    } catch (error) {
+        req.flash("error", "An error occured");
+        res.redirect("/users");
+    }
 });
 
 router.get("/:id", (req, res) => {
