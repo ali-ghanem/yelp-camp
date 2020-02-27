@@ -148,9 +148,11 @@ router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
         contactPhone,
         contactEmail,
         price,
+        country,
+        city,
         description
     } = req.body.campground;
-
+    
     if (!image) {
         image = "https://clipartart.com/images/a-person-camping-clipart.gif";
     }
@@ -163,6 +165,8 @@ router.put("/:id", middleware.isCampgroundAuthor, (req, res) => {
             contactPhone,
             contactEmail,
             price,
+            country,
+            city,
             description
         },
         (err, updatedCampground) => {
