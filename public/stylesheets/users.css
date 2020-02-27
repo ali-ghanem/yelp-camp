@@ -1,0 +1,42 @@
+#main-container {
+    min-height: -webkit-calc(100% - 96px);
+    min-height: -moz-calc(100% - 96px);
+    min-height: calc(100vh - 96px);
+}
+
+.card-user img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.search-bar {
+    background-color: #666666;
+}
+
+.search-bar form,
+.search-bar .input-group {
+    width: 100%;
+}
+
+@media (max-width: 767px) {
+    #search-bar-container {
+        padding: 0;
+        margin: 0;
+        max-width: none;
+    }
+}
+
+@media (min-width: 768px) {
+    #main-container {
+        padding-top: 1rem;
+    }
+
+    .search-bar {
+        border-radius: 0.25rem;
+    }
+
+    .search-bar form,
+    .search-bar .input-group {
+        width: auto;
+    }
+}
