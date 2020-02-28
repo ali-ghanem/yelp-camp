@@ -61,6 +61,9 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// use moment
+app.locals.moment = require("moment");
+
 // add middleware for storing logged in user info
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
