@@ -9,6 +9,11 @@ Application Demo: [aligh-yelpcamp.herokuapp.com](https://aligh-yelpcamp.herokuap
   * Authentication 
   * Authorization
   
+## Added Features
+  * User Profile
+  * Search campgrounds and users
+  * Filter campgrounds
+  
 ## Used Technologies
 * Front-End
   * HTML
@@ -16,7 +21,8 @@ Application Demo: [aligh-yelpcamp.herokuapp.com](https://aligh-yelpcamp.herokuap
   * Bootstrap
   * jQuery
   * [EJS](https://ejs.co/)
-
+  * [Country-Region DropDown Menu](https://github.com/geodatasource/country-region-dropdown-menu)
+  
 * Back-End
   * Express.js
   * MongoDB
@@ -24,7 +30,7 @@ Application Demo: [aligh-yelpcamp.herokuapp.com](https://aligh-yelpcamp.herokuap
   * [Passport.js](http://www.passportjs.org/)
   * [connect-flash](https://github.com/jaredhanson/connect-flash)
   * [method-override](https://www.npmjs.com/package/method-override)
-  * [Country-Region DropDown Menu](https://github.com/geodatasource/country-region-dropdown-menu)
+
 
 ## License
 #### [MIT](./LICENSE)
