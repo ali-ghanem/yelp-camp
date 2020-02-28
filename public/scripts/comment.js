@@ -8,7 +8,7 @@ $(document).ready(() => {
         let container = clickedButton.parents(".comment-container");
         let commentBody = container.find(".comment-body");
         let oldComment = commentBody.find(".comment-text");
-        let text = oldComment.text();
+        let text = oldComment.text().trim();
 
         let formAction = `/campgrounds/${campgroundId}/comments/${commentId}?_method=PUT`;
         let textInput = `<input class="form-control my-1" type="text" name="comment" value="${text}">`;
