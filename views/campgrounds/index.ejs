@@ -142,13 +142,26 @@
                         <div class="row">
                             <% campgrounds.forEach(campground => { %>
                             <div class="col-sm-6 col-md-4 mb-4 d-flex align-items-stretch">
-                                <div class="card h-100">
-                                    <img class="card-img-top img-fluid" src="<%= campground.image %>" alt="">
+                                <div class="card h-100 campground-card">
+                                    <a href="/campgrounds/<%= campground._id %>">
+                                        <img class="card-img-top img-fluid" src="<%= campground.image %>" alt="">
+                                    </a>
 
-                                    <div class="card-body text-center">
-                                        <h4 class="card-title"><%= campground.name %></h4>
-                                        <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>"> More
-                                            Info</a>
+                                    <div class="card-body p-3">
+                                        <a class="text-decoration-none" href="/campgrounds/<%= campground._id %>">
+                                            <h5 class="card-title "><%= campground.name %></h5>
+                                        </a>
+                                        <div> <span class=""><i class="fas fa-dollar-sign"></i>
+                                                <%= campground.price.toFixed(2) %>/night</span>
+                                        </div>
+                                        <div>
+                                            <span class=""><i class="fas fa-flag"></i>
+                                                <%= campground.country %></span>
+                                        </div>
+                                        <!-- date -->
+                                        <div class="date text-right">
+                                            <small><%= moment(campground.createdDate).fromNow() %></small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
