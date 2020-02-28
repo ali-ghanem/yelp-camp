@@ -70,3 +70,8 @@
     display: block;
     opacity: 1;
 }
+
+.campground-card i {
+    display: inline-block;
+    width: 20px;
+}

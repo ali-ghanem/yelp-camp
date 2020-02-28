@@ -19,7 +19,7 @@
             <div class="list-group">
                 <li class="list-group-item">
                     <span class="d-block">Price</span>
-                    <span class="font-weight-bold">$<%= Number(campground.price).toFixed(2) %>/night</span>
+                    <span class="font-weight-bold">$<%= campground.price.toFixed(2) %>/night</span>
                 </li>
                 <li class="list-group-item">
                     <span class="d-block">Creator</span>
@@ -30,20 +30,24 @@
                     </span>
                 </li>
                 <li class="list-group-item">
+                    <span class="d-block">Created Date</span>
+                    <span class="font-weight-bold"><%= campground.createdDate.toLocaleDateString("en-us") %></span>
+                </li>
+                <li class="list-group-item">
                     <span class="d-block">Country</span>
-                    <span class="font-weight-bold"><%= campground.country %> </span>
+                    <span class="font-weight-bold"><%= campground.country %></span>
                 </li>
                 <li class="list-group-item">
                     <span class="d-block">City</span>
-                    <span class="font-weight-bold"><%= campground.city %> </span>
+                    <span class="font-weight-bold"><%= campground.city %></span>
                 </li>
                 <li class="list-group-item">
                     <span class="d-block">Phone</span>
-                    <span class="font-weight-bold"><%= campground.contactPhone %> </span>
+                    <span class="font-weight-bold"><%= campground.contactPhone %></span>
                 </li>
                 <li class="list-group-item">
                     <span class="d-block">Email</span>
-                    <span class="font-weight-bold"><%= campground.contactEmail %> </span>
+                    <span class="font-weight-bold"><%= campground.contactEmail %></span>
                 </li>
             </div>
         </div>
@@ -62,22 +66,25 @@
 
             <div class="card card-body bg-light my-4 comments-container">
                 <% campground.comments.forEach(comment => { %>
-                <div id="<%= comment._id %>" class="photo-comment-container border-bottom pb-1 mb-3 d-flex flex-row">
+                <div id="<%= comment._id %>" class="photo-comment-container border rounded p-2 mb-3 d-flex flex-row">
+                    <!-- author photo -->
                     <div class="mr-2">
                         <img src="<%= comment.author.photo %>" alt="user photo" width="40" class="rounded-circle">
                     </div>
 
-                    <div class="comment-container w-100">
-                        <div class="comment-header">
-                            <div class="font-weight-bold float-left">
+                    <div class="comment-container w-100 ">
+                        <div class="comment-header d-flex">
+                            <!-- comment author -->
+                            <div class="font-weight-bold flex-grow-1">
                                 <a href="/users/<%= comment.author._id %>">
                                     <%= comment.author.firstName + " " + comment.author.lastName %>
                                 </a>
                             </div>
-                            <% if (currentUser && comment.author.equals(currentUser._id)) { %>
-                            <div class="float-right">
 
-                                <button class="btn-edit-comment d-inline-block mr-1"
+                            <!-- comment buttons -->
+                            <% if (currentUser && comment.author.equals(currentUser._id)) { %>
+                            <div class="comment-buttons text-right">
+                                <button class="btn-edit-comment d-inline-block"
                                     data-campground-id="<%= campground._id %>" data-comment-id="<%= comment._id %>"> <i
                                         class="fas fa-edit"></i> </button>
                                 <form class="d-inline-block"
@@ -89,10 +96,19 @@
                                 </form>
                             </div>
                             <% } %>
-                            <div class="float-none"> <br> </div>
+                            <div class="clear-fix"></div>
                         </div>
 
-                        <div class="comment-body"><%= comment.text %></div>
+                        <!-- comment text -->
+                        <div class="comment-body my-1">
+                            <div class="comment-text"><%= comment.text %>
+                            </div>
+                        </div>
+
+                        <!-- comment date -->
+                        <div class="text-right">
+                            <small class=""><%= moment(comment.createdDate).fromNow() %> </small>
+                        </div>
                     </div>
                 </div>
                 <% }) %>

@@ -6,7 +6,8 @@ $(document).ready(() => {
         let campgroundId = clickedButton.attr("data-campground-id");
         let commentId = clickedButton.attr("data-comment-id");
         let container = clickedButton.parents(".comment-container");
-        let oldComment = container.find(".comment-body");
+        let commentBody = container.find(".comment-body");
+        let oldComment = commentBody.find(".comment-text");
         let text = oldComment.text();
 
         let formAction = `/campgrounds/${campgroundId}/comments/${commentId}?_method=PUT`;
@@ -15,7 +16,7 @@ $(document).ready(() => {
         let cancelButton = `<button class="btn btn-secondary btn-sm btn-cancel-edit" type="button" >Cancel</button>`;
         let form = `<form class="edit-form" action="${formAction}" method="post" > ${textInput}  ${saveInput} ${cancelButton} </form> `;
 
-        container.append(form);
+        commentBody.append(form);
         
         oldComment.hide();
     }
@@ -24,7 +25,7 @@ $(document).ready(() => {
         let container = $(this).parents(".comment-container");
         let form = container.find(".edit-form");
         form.remove();
-        let oldComment = container.find(".comment-body");
+        let oldComment = container.find(".comment-body .comment-text");
         oldComment.show();
         showEditForm.called = false;
     }
