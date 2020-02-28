@@ -46,7 +46,7 @@ body {
 }
 
 .slideshow li:nth-child(1) {
-    background-image: url("../img/background_images/.jpg");
+    background-image: url("../img/background_images/1.jpg");
 }
 .slideshow li:nth-child(2) {
     background-image: url("../img/background_images/2.jpg");
