@@ -80,7 +80,6 @@
 
             <div class="row">
                 <% users.forEach(user => { %>
-                <% if (usersCampgrounds[user._id]) { %>
                 <div class="col-lg-6 mb-3">
                     <div class="card-user h-100">
                         <div class="card flex-row h-100 p-2">
@@ -95,7 +94,6 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
                 <% }) %>
             </div>
         </div>
