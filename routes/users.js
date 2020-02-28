@@ -4,17 +4,18 @@ const User = require("../models/user");
 const Campground = require("../models/campground");
 const middleware = require("../middleware");
 
-async function getUsersCampgrounds(res) {
+async function getUsersCampgrounds(res, users) {
     try {
         let usersCampgrounds = {};
-        let campgrounds = await Campground.find({});
-        campgrounds.forEach(camp => {
-            if (usersCampgrounds[camp.author]) {
-                usersCampgrounds[camp.author] += 1;
-            } else {
-                usersCampgrounds[camp.author] = 1;
-            }
+        
+        users.forEach(user => (usersCampgrounds[user._id] = 0));
+
+        let campgrounds = await Campground.find({
+            author: { $in: Object.keys(usersCampgrounds) }
         });
+        
+        campgrounds.forEach(camp => (usersCampgrounds[camp.author] += 1));
+        
         return usersCampgrounds;
     } catch (err) {
         res.locals.error = "An error occured";
@@ -44,7 +45,7 @@ router.get("/", async (req, res) => {
             users = await User.find({});
         }
 
-        let usersCampgrounds = await getUsersCampgrounds(res);
+        let usersCampgrounds = await getUsersCampgrounds(res, users);
 
         res.render("users/index", { users, usersCampgrounds });
     } catch (error) {
